@@ -8,530 +8,528 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel" data-presets="react,typescript">
+<script>
+"use strict";
 const { useEffect, useMemo, useRef, useState } = React;
-
 function Icon({ children, className }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-      strokeLinecap="round" strokeLinejoin="round" className={className}>
-      {children}
-    </svg>
-  );
+    return (React.createElement("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: className }, children));
 }
-const Moon = (p) => <Icon {...p}><path d="M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11Z" /></Icon>;
-const Clock3 = (p) => <Icon {...p}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" /></Icon>;
-const UtensilsCrossed = (p) => <Icon {...p}><path d="M6 3v7a2 2 0 0 0 2 2v9M6 3v7M10 3v7M6 10h4M17 3l-5 9m5-9 3 18m-3-18-3 18" /></Icon>;
-const Settings2 = (p) => <Icon {...p}><circle cx="12" cy="12" r="3" /><path d="M12 3v3M12 18v3M4.2 6.2l2.1 2.1M17.7 15.7l2.1 2.1M3 12h3M18 12h3M4.2 17.8l2.1-2.1M17.7 8.3l2.1-2.1" /></Icon>;
-const Volume2 = (p) => <Icon {...p}><path d="M5 9v6h4l5 4V5L9 9H5Z" /><path d="M18 9a4 4 0 0 1 0 6M20.5 6.5a8 8 0 0 1 0 11" /></Icon>;
-const SunMedium = (p) => <Icon {...p}><circle cx="12" cy="12" r="4" /><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" /></Icon>;
-const X = (p) => <Icon {...p}><path d="M6 6l12 12M18 6 6 18" /></Icon>;
-const HelpCircle = (p) => <Icon {...p}><circle cx="12" cy="12" r="9" /><path d="M9.5 9.5a2.5 2.5 0 0 1 4.9.8c0 1.7-2.4 1.7-2.4 3.5" /><path d="M12 17h.01" /></Icon>;
-const ChevronDown = (p) => <Icon {...p}><path d="M6 9l6 6 6-6" /></Icon>;
-const ChevronUp = (p) => <Icon {...p}><path d="M6 15l6-6 6 6" /></Icon>;
-const EllipsisVertical = (p) => <Icon {...p}><circle cx="12" cy="5" r="1.2" fill="currentColor" /><circle cx="12" cy="12" r="1.2" fill="currentColor" /><circle cx="12" cy="19" r="1.2" fill="currentColor" /></Icon>;
-const Clock = (p) => <Icon {...p}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></Icon>;
-const Sunrise = (p) => <Icon {...p}><path d="M12 3v5M5.6 9.6l1.4 1.4M18.4 9.6l-1.4 1.4M2 15h20M5 15a7 7 0 0 1 14 0" /></Icon>;
-const Pin = (p) => <Icon {...p}><path d="M12 2v6l4 3-1 4h-3v7l-2-3v-4H7l-1-4 4-3V2Z" /></Icon>;
-const PinOff = (p) => <Icon {...p}><path d="M12 2v6l4 3-1 4h-3v7l-2-3v-4H7l-1-4 4-3V2Z" /><path d="M3 3l18 18" /></Icon>;
-
-// ---------- types & storage ----------
-type Preferences = {
-  nextShiftStart: string;
-  nextShiftEnd: string;
-  commute: number;
-  prep: number;
-  desiredSleep: number;
-  daytimeSleeper: boolean;
-  trainedToday: boolean;
-  heavySweat: boolean;
-  episodeLength: number;
-};
-type Task = { id: string; title: string; estimate: number; done?: boolean };
-type Meal = { id: string; at: string; description: string; categories: string[] };
-
-function useLocalStorage<T>(key: string, initial: T): [T, (v: T) => void] {
-  const [state, setState] = useState<T>(() => {
-    try { const raw = localStorage.getItem(key); if (raw) return JSON.parse(raw) as T; } catch {}
-    return initial;
-  });
-  useEffect(() => { try { localStorage.setItem(key, JSON.stringify(state)); } catch {} }, [key, state]);
-  return [state, setState];
+const Moon = (p) => React.createElement(Icon, { ...p },
+    React.createElement("path", { d: "M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11Z" }));
+const Clock3 = (p) => React.createElement(Icon, { ...p },
+    React.createElement("circle", { cx: "12", cy: "12", r: "9" }),
+    React.createElement("path", { d: "M12 7v5l3.5 2" }));
+const UtensilsCrossed = (p) => React.createElement(Icon, { ...p },
+    React.createElement("path", { d: "M6 3v7a2 2 0 0 0 2 2v9M6 3v7M10 3v7M6 10h4M17 3l-5 9m5-9 3 18m-3-18-3 18" }));
+const Settings2 = (p) => React.createElement(Icon, { ...p },
+    React.createElement("circle", { cx: "12", cy: "12", r: "3" }),
+    React.createElement("path", { d: "M12 3v3M12 18v3M4.2 6.2l2.1 2.1M17.7 15.7l2.1 2.1M3 12h3M18 12h3M4.2 17.8l2.1-2.1M17.7 8.3l2.1-2.1" }));
+const Volume2 = (p) => React.createElement(Icon, { ...p },
+    React.createElement("path", { d: "M5 9v6h4l5 4V5L9 9H5Z" }),
+    React.createElement("path", { d: "M18 9a4 4 0 0 1 0 6M20.5 6.5a8 8 0 0 1 0 11" }));
+const SunMedium = (p) => React.createElement(Icon, { ...p },
+    React.createElement("circle", { cx: "12", cy: "12", r: "4" }),
+    React.createElement("path", { d: "M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" }));
+const X = (p) => React.createElement(Icon, { ...p },
+    React.createElement("path", { d: "M6 6l12 12M18 6 6 18" }));
+const HelpCircle = (p) => React.createElement(Icon, { ...p },
+    React.createElement("circle", { cx: "12", cy: "12", r: "9" }),
+    React.createElement("path", { d: "M9.5 9.5a2.5 2.5 0 0 1 4.9.8c0 1.7-2.4 1.7-2.4 3.5" }),
+    React.createElement("path", { d: "M12 17h.01" }));
+const ChevronDown = (p) => React.createElement(Icon, { ...p },
+    React.createElement("path", { d: "M6 9l6 6 6-6" }));
+const ChevronUp = (p) => React.createElement(Icon, { ...p },
+    React.createElement("path", { d: "M6 15l6-6 6 6" }));
+const EllipsisVertical = (p) => React.createElement(Icon, { ...p },
+    React.createElement("circle", { cx: "12", cy: "5", r: "1.2", fill: "currentColor" }),
+    React.createElement("circle", { cx: "12", cy: "12", r: "1.2", fill: "currentColor" }),
+    React.createElement("circle", { cx: "12", cy: "19", r: "1.2", fill: "currentColor" }));
+const Clock = (p) => React.createElement(Icon, { ...p },
+    React.createElement("circle", { cx: "12", cy: "12", r: "9" }),
+    React.createElement("path", { d: "M12 7v5l3 2" }));
+const Sunrise = (p) => React.createElement(Icon, { ...p },
+    React.createElement("path", { d: "M12 3v5M5.6 9.6l1.4 1.4M18.4 9.6l-1.4 1.4M2 15h20M5 15a7 7 0 0 1 14 0" }));
+const Pin = (p) => React.createElement(Icon, { ...p },
+    React.createElement("path", { d: "M12 2v6l4 3-1 4h-3v7l-2-3v-4H7l-1-4 4-3V2Z" }));
+const PinOff = (p) => React.createElement(Icon, { ...p },
+    React.createElement("path", { d: "M12 2v6l4 3-1 4h-3v7l-2-3v-4H7l-1-4 4-3V2Z" }),
+    React.createElement("path", { d: "M3 3l18 18" }));
+function useLocalStorage(key, initial) {
+    const [state, setState] = useState(() => {
+        try {
+            const raw = localStorage.getItem(key);
+            if (raw)
+                return JSON.parse(raw);
+        }
+        catch { }
+        return initial;
+    });
+    useEffect(() => { try {
+        localStorage.setItem(key, JSON.stringify(state));
+    }
+    catch { } }, [key, state]);
+    return [state, setState];
 }
-function defaultShiftStart(): string {
-  const d = new Date(); d.setDate(d.getDate() + 1); d.setHours(6, 30, 0, 0);
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+function defaultShiftStart() {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    d.setHours(6, 30, 0, 0);
+    const pad = (n) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
-function defaultShiftEnd(): string {
-  const d = new Date(defaultShiftStart()); d.setHours(d.getHours() + 8);
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+function defaultShiftEnd() {
+    const d = new Date(defaultShiftStart());
+    d.setHours(d.getHours() + 8);
+    const pad = (n) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
-function fmtTime(d: Date): string { return d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); }
-function fmtDateLong(d: Date): string { return d.toLocaleDateString([], { weekday: "long", month: "short", day: "numeric" }); }
-function fmtDuration(mins: number): string {
-  if (mins < 0) return "0 min"; const h = Math.floor(mins / 60); const m = Math.round(mins % 60);
-  if (h === 0) return `${m} min`; if (m === 0) return `${h} hour${h>1?'s':''}`; return `${h}h ${m}m`;
+function fmtTime(d) { return d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); }
+function fmtDateLong(d) { return d.toLocaleDateString([], { weekday: "long", month: "short", day: "numeric" }); }
+function fmtDuration(mins) {
+    if (mins < 0)
+        return "0 min";
+    const h = Math.floor(mins / 60);
+    const m = Math.round(mins % 60);
+    if (h === 0)
+        return `${m} min`;
+    if (m === 0)
+        return `${h} hour${h > 1 ? 's' : ''}`;
+    return `${h}h ${m}m`;
 }
-function parseLocalDateTime(s: string): Date { const d = new Date(s); return isNaN(d.getTime()) ? new Date(defaultShiftStart()) : d; }
-
-function speak(text: string) {
-  try {
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.rate = 0.92; u.pitch = 1; u.volume = 1;
-    window.speechSynthesis.speak(u);
-  } catch {}
+function parseLocalDateTime(s) { const d = new Date(s); return isNaN(d.getTime()) ? new Date(defaultShiftStart()) : d; }
+function speak(text) {
+    try {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.rate = 0.92;
+        u.pitch = 1;
+        u.volume = 1;
+        window.speechSynthesis.speak(u);
+    }
+    catch { }
 }
 function beepDone() {
-  try {
-    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const o = ctx.createOscillator(); const g = ctx.createGain();
-    o.type = "sine"; o.frequency.value = 880; o.connect(g); g.connect(ctx.destination);
-    g.gain.setValueAtTime(0.0001, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.02);
-    o.start(); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25); o.stop(ctx.currentTime + 0.3);
-  } catch {}
-}
-
-function App() {
-  const [now, setNow] = useState(() => new Date());
-  useEffect(() => { const id = setInterval(() => setNow(new Date()), 60000); return () => clearInterval(id); }, []);
-
-  const [preferences, setPreferences] = useLocalStorage<Preferences>("preferences_v2", {
-    nextShiftStart: defaultShiftStart(),
-    nextShiftEnd: defaultShiftEnd(),
-    commute: 35,
-    prep: 35,
-    desiredSleep: 7.5,
-    daytimeSleeper: false,
-    trainedToday: true,
-    heavySweat: false,
-    episodeLength: 42,
-  });
-  const [tasks, setTasks] = useLocalStorage<Task[]>("tasks", [
-    { id:"1", title:"Pack work bag", estimate:10 },
-    { id:"2", title:"Eat dinner", estimate:30 },
-    { id:"3", title:"Relax and wind down", estimate:30 },
-  ]);
-  const [meals, setMeals] = useLocalStorage<Meal[]>("meals", [
-    { id:"m1", at: new Date().toISOString(), description:"Oats + banana + milk", categories:["fiber"] },
-  ]);
-
-  const [activeTab, setActiveTab] = useState<"sleep"|"time"|"food"|"setup">("sleep");
-  const [showHelp, setShowHelp] = useState(false);
-  const [toast, setToast] = useState<string | null>(null);
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const [nowCollapsed, setNowCollapsed] = useLocalStorage<boolean>("nowCollapsed", false);
-  const [nowHiddenUntil, setNowHiddenUntil] = useLocalStorage<number | null>("nowHiddenUntil", null);
-  const [showNowMenu, setShowNowMenu] = useState(false);
-  const [nowPinned, setNowPinned] = useLocalStorage<boolean>("nowPinned", false);
-  const touchStartY = useRef<number | null>(null);
-  const pillTouchStartY = useRef<number | null>(null);
-
-  const shiftStart = useMemo(() => parseLocalDateTime(preferences.nextShiftStart), [preferences.nextShiftStart]);
-  const shiftEnd = useMemo(() => parseLocalDateTime(preferences.nextShiftEnd), [preferences.nextShiftEnd]);
-  const wakeTarget = useMemo(() => { const d = new Date(shiftStart); d.setMinutes(d.getMinutes() - preferences.commute - preferences.prep); return d; }, [shiftStart, preferences.commute, preferences.prep]);
-  const sleepStart = useMemo(() => { const d = new Date(wakeTarget); d.setMinutes(d.getMinutes() - preferences.desiredSleep*60); return d; }, [wakeTarget, preferences.desiredSleep]);
-  const sleepEnd = wakeTarget;
-  const availableMinutes = useMemo(() => Math.max(0, (sleepStart.getTime() - now.getTime())/60000), [sleepStart, now]);
-
-  const priority = useMemo(() => {
-    const hoursBeforeBed = (sleepStart.getTime() - now.getTime())/3600000;
-    if (hoursBeforeBed < 0.6 && hoursBeforeBed > -2) return { title:"Lights low. Phone away. 5-min calm.", why:"Sleep time is starting — small calm now protects tomorrow.", action:"Start wind-down now" };
-    if (hoursBeforeBed < 2.5 && hoursBeforeBed > 0) return { title:`Don't start a new show after 9pm`, why:`A ${preferences.episodeLength}-min show steals sleep. Save for tomorrow.`, action:"Save show for tomorrow" };
-    return { title:"Pack work bag now — saves 10 min tomorrow", why:"Getting ready now means less rushing and more sleep.", action:"Pack bag now" };
-  }, [sleepStart, now, preferences.episodeLength]);
-
-  const nowSentence = useMemo(() => `${fmtDateLong(shiftStart)} work at ${fmtTime(shiftStart)}. ${priority.title}`, [shiftStart, priority.title]);
-
-  useEffect(() => { if(!toast) return; const t=setTimeout(()=>setToast(null),3000); return ()=>clearTimeout(t); }, [toast]);
-
-  useEffect(() => {
-    if(!nowHiddenUntil) return;
-    const check = () => {
-      if(Date.now() >= (nowHiddenUntil as number)){
-        setNowHiddenUntil(null);
-        setNowCollapsed(false);
-        setToast("What to do now is back");
-      }
-    };
-    check();
-    const id = setInterval(check, 30000);
-    return ()=>clearInterval(id);
-  }, [nowHiddenUntil]);
-
-  const isTempHidden = !!(nowHiddenUntil && nowHiddenUntil > Date.now());
-  const isNowCollapsedEffective = nowCollapsed || isTempHidden;
-  const hiddenMinutesLeft = useMemo(() => {
-    if(!nowHiddenUntil) return 0;
-    return Math.max(0, Math.ceil((nowHiddenUntil - Date.now())/60000));
-  }, [nowHiddenUntil, now]);
-
-  function triggerHaptic(){ try{ (navigator as any).vibrate?.(20); } catch {} }
-  function toggleNowCollapsed(){
-    if(nowPinned && !isNowCollapsedEffective){
-      setToast("Unpin first to hide — tap ••• then Unpin");
-      setShowNowMenu(true);
-      return;
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = "sine";
+        o.frequency.value = 880;
+        o.connect(g);
+        g.connect(ctx.destination);
+        g.gain.setValueAtTime(0.0001, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.02);
+        o.start();
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
+        o.stop(ctx.currentTime + 0.3);
     }
-    triggerHaptic(); beepDone();
-    if(isNowCollapsedEffective){ setNowCollapsed(false); setNowHiddenUntil(null); setToast("Showing what to do now"); }
-    else { setNowCollapsed(true); setToast("Hidden — tap green pill to show"); }
-    setShowNowMenu(false);
-  }
-  function hideForOneHour(){
-    triggerHaptic();
-    const until = Date.now() + 60*60*1000;
-    setNowHiddenUntil(until); setNowCollapsed(true); setShowNowMenu(false);
-    setToast("Hidden for 1 hour"); beepDone();
-  }
-  function hideUntilTomorrow(){
-    triggerHaptic();
-    const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate()+1); tomorrow.setHours(6,0,0,0);
-    setNowHiddenUntil(tomorrow.getTime()); setNowCollapsed(true); setShowNowMenu(false);
-    setToast("Hidden until 6 AM"); beepDone();
-  }
-  function togglePin(){
-    triggerHaptic(); const next = !nowPinned; setNowPinned(next);
-    if(next){ setNowCollapsed(false); setNowHiddenUntil(null); }
-    setShowNowMenu(false); setToast(next ? "Pinned — stays visible" : "Unpinned"); beepDone();
-  }
-  function logMeal(desc:string){ const m:Meal={id:Date.now().toString(), at:new Date().toISOString(), description:desc, categories:["energy"]}; setMeals([m,...meals]); setToast(`Saved: ${desc}`); beepDone(); }
-
-  const totalPlanned = tasks.filter(t=>!t.done).reduce((s,t)=>s+t.estimate,0);
-  const quietMessage = `Please be quiet — ${preferences.daytimeSleeper? "I sleep in day" : "I sleep for early work"}: ${fmtTime(sleepStart)} to ${fmtTime(sleepEnd)}. Headphones please. Text, don't call. Thanks!`;
-  const foodNeedsPlain = useMemo(() => {
-    if(preferences.trainedToday && preferences.heavySweat) return "You sweated a lot. Water + salty snack + banana. That's the best choice now.";
-    if(preferences.trainedToday) return "You moved a lot. Water + yogurt + banana. Small action that helps most.";
-    return "Balanced meal + water. Rice, beans, chicken or tofu, fruit, yogurt.";
-  }, [preferences.trainedToday, preferences.heavySweat]);
-
-  return (
-    <div className="min-h-screen bg-white text-black selection:bg-black selection:text-white">
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&family=Fraunces:opsz,wght@9..144,700&display=swap'); *{font-family:Inter,system-ui,sans-serif} .display{font-family:Fraunces,serif} button:active{transform:scale(0.985)} .tap{ min-height:56px } .now-card-transition{ transition: max-height 380ms ease, opacity 320ms ease, transform 320ms ease } .pulse-green{ animation: pulseGreen 2s infinite } @keyframes pulseGreen{ 0%{ box-shadow:0 0 0 0 rgba(22,163,74,0.6)} 70%{ box-shadow:0 0 0 10px rgba(22,163,74,0)} 100%{ box-shadow:0 0 0 0 rgba(22,163,74,0)} } body{ line-height:1.6 }`}</style>
-
-      <div className="sticky top-0 z-30 bg-white border-b-[3px] border-black">
-        <div className="max-w-[720px] mx-auto px-5 pt-5 pb-5">
-          <div className="flex items-start justify-between gap-6">
-            <div className="space-y-1">
-              <div className="display text-[28px] sm:text-[34px] leading-tight tracking-tight mt-2 mb-1">WorkWell — No Bulky View</div>
-              <div className="text-[15px] leading-relaxed font-bold">Next: {fmtDateLong(shiftStart)} at {fmtTime(shiftStart)}–{fmtTime(shiftEnd)}</div>
-            </div>
-            <button onClick={()=>setShowHelp(true)} className="tap rounded-full bg-black text-white px-5 text-[18px] font-bold flex items-center gap-3 shrink-0"><HelpCircle className="w-6 h-6"/> Help</button>
-          </div>
-
-          <div className="mt-6">
-            <div
-              id="now-card-region"
-              role="region"
-              aria-label="What to do now"
-              aria-hidden={isNowCollapsedEffective ? true : false}
-              className={`now-card-transition overflow-hidden ${isNowCollapsedEffective ? "max-h-0 opacity-0 pointer-events-none" : "max-h-[520px] opacity-100"}`}
-              onTouchStart={(e)=>{ touchStartY.current = e.touches[0].clientY; }}
-              onTouchEnd={(e)=>{
-                if(touchStartY.current===null) return;
-                const delta = e.changedTouches[0].clientY - touchStartY.current;
-                if(delta < -60){ toggleNowCollapsed(); }
-                touchStartY.current=null;
-              }}
-            >
-              <div className="rounded-[24px] bg-black text-white p-6 flex gap-4 items-start">
-                <div className="mt-0.5 shrink-0 h-11 w-11 rounded-full bg-white text-black grid place-items-center"><SunMedium className="h-6 w-6"/></div>
-                <div className="min-w-0 flex-1 space-y-2">
-                  <div className="text-[13px] uppercase tracking-[0.18em] font-bold opacity-80">What to do NOW</div>
-                  <div className="text-[20px] sm:text-[22px] leading-snug font-bold mt-2 mb-1">{nowSentence}</div>
-                  <div className="text-[13px] leading-relaxed opacity-70">Tap card for 1-line why. No extra screen.</div>
-                </div>
-                <button onClick={(e)=>{ e.stopPropagation(); speak(nowSentence); setToast("Reading aloud"); }} aria-label="Read it to me" className="tap h-14 w-14 rounded-full bg-white text-black grid place-items-center shrink-0 border-2 border-white"><Volume2 className="w-7 h-7"/></button>
-              </div>
-              <div className="mt-4 flex gap-4 items-stretch">
-                <button
-                  aria-expanded={!isNowCollapsedEffective}
-                  aria-controls="now-card-region"
-                  onClick={toggleNowCollapsed}
-                  className="tap flex-1 rounded-[16px] bg-zinc-100 border-[3px] border-black flex items-center justify-center gap-3 text-[18px] font-extrabold min-h-[56px] h-[56px]"
-                >
-                  <span className="text-[20px]">▼</span><span>Tap to hide</span><ChevronDown className="w-7 h-7 animate-bounce" />
-                </button>
-                <button aria-label="More options" onClick={()=>setShowNowMenu(v=>!v)} className="tap h-[56px] w-[64px] rounded-[16px] bg-white border-[3px] border-black grid place-items-center"><EllipsisVertical className="w-7 h-7" /></button>
-              </div>
-            </div>
-
-            <div className={`now-card-transition overflow-hidden ${isNowCollapsedEffective ? "max-h-[100px] opacity-100 mt-3" : "max-h-0 opacity-0 pointer-events-none"}`} aria-hidden={!isNowCollapsedEffective}>
-              <button
-                aria-expanded={!isNowCollapsedEffective}
-                aria-controls="now-card-region"
-                onClick={toggleNowCollapsed}
-                onTouchStart={(e)=>{ pillTouchStartY.current = e.touches[0].clientY; }}
-                onTouchEnd={(e)=>{
-                  if(pillTouchStartY.current===null) return;
-                  const delta = e.changedTouches[0].clientY - pillTouchStartY.current;
-                  if(delta > 60){ toggleNowCollapsed(); }
-                  pillTouchStartY.current=null;
-                }}
-                className="tap w-full rounded-full bg-white border-[3px] border-green-600 min-h-[56px] px-6 flex items-center justify-between gap-4 pulse-green"
-              >
-                <span className="flex items-center gap-3 text-left">
-                  <span className="h-10 w-10 rounded-full bg-green-600 text-white grid place-items-center shrink-0"><ChevronUp className="w-6 h-6" /></span>
-                  <span className="text-[18px] font-extrabold leading-tight tracking-wide">▲ What to do now — tap to show {isTempHidden && hiddenMinutesLeft>0 && <span className="ml-2 font-bold text-green-700">({hiddenMinutesLeft}m)</span>}</span>
-                </span>
-                <span className="shrink-0 text-[14px] bg-green-50 border-2 border-green-600 rounded-full px-4 py-1.5 font-bold tracking-widest">SHOW</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <main className="max-w-[720px] mx-auto px-5 py-6 pb-40 space-y-6">
-
-        {activeTab==="sleep" && (
-          <div className="space-y-6">
-            {/* ONE CARD ONLY - NO BULKY VIEW */}
-            <div
-              onClick={()=>setExpanded(expanded==='sleep' ? null : 'sleep')}
-              className="rounded-[32px] bg-white border-[3px] border-black p-6 md:p-8 shadow-[8px_8px_0px_0px_black] cursor-pointer"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex items-center gap-3"><Moon className="w-7 h-7"/><h2 className="display text-[26px] leading-tight">Sleep time</h2></div>
-                <span className="text-[12px] font-bold tracking-widest border-2 border-black rounded-full px-3 py-1 bg-zinc-100">{expanded==='sleep' ? "TAP TO HIDE" : "TAP FOR WHY"}</span>
-              </div>
-              <div className="mt-4">
-                <div className="text-[15px] font-bold uppercase tracking-widest opacity-70">Up at {fmtTime(sleepEnd)} • Sleep {fmtTime(sleepStart)}–{fmtTime(sleepEnd)}</div>
-                <div className="text-[24px] font-extrabold leading-tight mt-3">{priority.title}</div>
-                <div className="text-[18px] leading-relaxed mt-2">{priority.why}</div>
-              </div>
-              {expanded==='sleep' && (
-                <div className="mt-4 rounded-[16px] bg-zinc-100 border-2 border-black p-4 text-[16px] leading-relaxed">
-                  protected sleep window = your sleep time that we protect. If you watch {preferences.episodeLength}m now, you get {fmtDuration(Math.max(0, preferences.desiredSleep*60 - Math.max(0, (now.getTime() + preferences.episodeLength*60000 - sleepStart.getTime())/60000)))} sleep instead of {fmtDuration(preferences.desiredSleep*60)}.
-                </div>
-              )}
-              <button
-                onClick={(e)=>{ e.stopPropagation(); setToast(`${priority.action} — good choice!`); beepDone(); }}
-                className="tap mt-5 w-full rounded-full bg-green-600 text-white text-[22px] font-extrabold border-[3px] border-black min-h-[64px]"
-              >
-                {priority.action} ✓
-              </button>
-              <div className="mt-3 text-[13px] text-center font-bold opacity-60">Card tap = 1 extra line. No new screen. Done button = action.</div>
-            </div>
-
-            <div
-              onClick={()=>setExpanded(expanded==='quiet' ? null : 'quiet')}
-              className="rounded-[28px] bg-white border-[3px] border-black p-6 cursor-pointer"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="text-[20px] font-extrabold leading-tight">Quiet note for family — tap to show</div>
-                <span className="text-[12px] font-bold tracking-widest border-2 border-black rounded-full px-3 py-1 bg-zinc-100 shrink-0">{expanded==='quiet' ? "HIDE" : "SHOW"}</span>
-              </div>
-              <div className="text-[16px] leading-relaxed mt-2">One sentence to show family when you sleep.</div>
-              {expanded==='quiet' && (
-                <div className="mt-4 rounded-[16px] bg-black text-white p-5 text-[20px] font-bold leading-tight text-center">
-                  {quietMessage}
-                  <div className="mt-4 flex gap-3">
-                    <button onClick={(e)=>{ e.stopPropagation(); navigator.clipboard?.writeText(quietMessage); setToast("Copied"); }} className="tap flex-1 rounded-full bg-white text-black text-[16px] font-bold">Copy</button>
-                    <button onClick={(e)=>{ e.stopPropagation(); speak(quietMessage); }} className="tap flex-1 rounded-full bg-zinc-800 text-white text-[16px] font-bold border-2 border-white">Read aloud</button>
-                  </div>
-                </div>
-              )}
-              <button onClick={(e)=>{ e.stopPropagation(); setToast("Note ready — show family"); beepDone(); }} className="tap mt-4 w-full rounded-full bg-black text-white text-[18px] font-bold min-h-[56px]">Done — note ready ✓</button>
-            </div>
-          </div>
-        )}
-
-        {activeTab==="time" && (
-          <div className="space-y-6">
-            <div
-              onClick={()=>setExpanded(expanded==='time' ? null : 'time')}
-              className="rounded-[32px] bg-black text-white border-[3px] border-black p-6 md:p-8 shadow-[8px_8px_0px_0px_white] cursor-pointer"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3"><Clock3 className="w-7 h-7"/><h2 className="display text-[26px] leading-tight">Evening time</h2></div>
-                <span className="text-[12px] font-bold tracking-widest border-2 border-white rounded-full px-3 py-1 bg-white text-black">{expanded==='time' ? "HIDE" : "WHY?"}</span>
-              </div>
-              <div className="display text-[44px] leading-none mt-5">{fmtDuration(availableMinutes)} free</div>
-              <div className="text-[18px] leading-relaxed mt-2">Until sleep at {fmtTime(sleepStart)} • You planned {fmtDuration(totalPlanned)}</div>
-              {expanded==='time' && (
-                <div className="mt-4 rounded-[12px] bg-white text-black p-4 text-[15px] leading-relaxed border-2 border-white">available time = time you have before bed. If planned &gt; free, sleep suffers. Best choice = keep sleep.</div>
-              )}
-              <div className="mt-6 rounded-[16px] bg-white text-black p-4 border-2 border-white">
-                <div className="text-[16px] font-bold">Tonight — tap circle when done</div>
-                <div className="mt-3 space-y-3">
-                  {tasks.map(t=>(
-                    <div key={t.id} className="flex items-center justify-between gap-3">
-                      <button
-                        onClick={(e)=>{ e.stopPropagation(); setTasks(tasks.map(x=>x.id===t.id? {...x, done:!x.done}:x)); if(!t.done) beepDone(); }}
-                        className="flex items-center gap-3 text-left flex-1 min-h-[48px]"
-                      >
-                        <span className={`h-9 w-9 rounded-full border-2 border-black grid place-items-center shrink-0 ${t.done? "bg-green-600 text-white":"bg-white text-black"}`}>{t.done? "✓":""}</span>
-                        <span className={`text-[18px] font-bold leading-snug ${t.done? "line-through opacity-60":""}`}>{t.title} ({t.estimate}m)</span>
-                      </button>
-                      <button onClick={(e)=>{ e.stopPropagation(); setTasks(tasks.filter(x=>x.id!==t.id)); }} className="h-9 w-9 grid place-items-center rounded-full border-2 border-black bg-white text-black"><X className="w-4 h-4"/></button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <button
-                onClick={(e)=>{ e.stopPropagation(); const first = tasks.find(t=>!t.done); if(first){ setToast(`Do now: ${first.title} — ${first.estimate} min`); speak(first.title); } else { setToast("All done — rest now"); } beepDone(); }}
-                className="tap mt-6 w-full rounded-full bg-green-500 text-black text-[20px] font-extrabold border-[3px] border-white min-h-[60px]"
-              >
-                Main action: Do one now ✓
-              </button>
-            </div>
-          </div>
-        )}
-
-        {activeTab==="food" && (
-          <div className="space-y-6">
-            <div
-              onClick={()=>setExpanded(expanded==='food' ? null : 'food')}
-              className="rounded-[32px] bg-white border-[3px] border-black p-6 md:p-8 cursor-pointer"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3"><UtensilsCrossed className="w-7 h-7"/><h2 className="display text-[26px] leading-tight">Best food next</h2></div>
-                <span className="text-[12px] font-bold tracking-widest border-2 border-black rounded-full px-3 py-1 bg-zinc-100">{expanded==='food' ? "HIDE" : "WHY?"}</span>
-              </div>
-              <div className="mt-4 rounded-[20px] bg-green-600 text-white border-[3px] border-black p-5">
-                <div className="text-[20px] font-bold leading-snug">{foodNeedsPlain}</div>
-                <div className="text-[14px] leading-relaxed mt-2 opacity-90">One sentence why: best available option right now.</div>
-              </div>
-              <div className="mt-6 space-y-3">
-                {[
-                  { name:"Yogurt + banana + nuts", icon:"🍌" },
-                  { name:"Rice + beans + fruit", icon:"🍚" },
-                  { name:"Turkey sandwich + water", icon:"🥪" },
-                ].map(f=>(
-                  <button key={f.name} onClick={(e)=>{ e.stopPropagation(); logMeal(f.name); }} className="tap w-full rounded-[20px] border-[3px] border-black bg-white px-5 py-4 flex items-center justify-between text-left min-h-[60px]">
-                    <span className="flex items-center gap-3"><span className="text-[24px]">{f.icon}</span><span className="text-[18px] font-bold leading-snug">{f.name}</span></span>
-                    <span className="rounded-full bg-black text-white px-4 py-1 text-[14px] font-bold shrink-0">I ate this ✓</span>
-                  </button>
-                ))}
-              </div>
-              {expanded==='food' && (
-                <div className="mt-4 rounded-[16px] bg-amber-50 border-[3px] border-amber-600 p-4 text-[16px] leading-relaxed">Tap I ate this = Done. Extra line shows why — no new screen. If kidney/heart limits, ask doctor before adding salt.</div>
-              )}
-              <button onClick={(e)=>{ e.stopPropagation(); logMeal("Balanced meal + water"); }} className="tap mt-5 w-full rounded-full bg-black text-white text-[18px] font-bold min-h-[60px]">Done — ate something good ✓</button>
-            </div>
-          </div>
-        )}
-
-        {activeTab==="setup" && (
-          <div className="space-y-6">
-            <div className="rounded-[32px] bg-white border-[3px] border-black p-6 md:p-8">
-              <div className="flex items-center gap-3"><Settings2 className="w-7 h-7"/><h2 className="display text-[26px] leading-tight">Setup — work time</h2></div>
-              <div className="mt-5">
-                <div className="text-[18px] font-extrabold leading-tight">What time is work tomorrow?</div>
-                <div className="text-[14px] leading-relaxed opacity-70 mt-1">One tap to set. No extra view.</div>
-                <div className="mt-4 grid grid-cols-2 gap-4">
-                  <label className="block"><span className="text-[15px] font-bold">Starts</span><input type="time" value={preferences.nextShiftStart.slice(11,16)} onChange={e=>{ const d=preferences.nextShiftStart.slice(0,10); setPreferences({...preferences, nextShiftStart:`${d}T${e.target.value}`}); }} className="tap mt-2 w-full rounded-full border-[3px] border-black px-5 text-[22px] font-bold min-h-[56px] bg-white" /></label>
-                  <label className="block"><span className="text-[15px] font-bold">Ends</span><input type="time" value={preferences.nextShiftEnd.slice(11,16)} onChange={e=>{ const d=preferences.nextShiftEnd.slice(0,10); setPreferences({...preferences, nextShiftEnd:`${d}T${e.target.value}`}); }} className="tap mt-2 w-full rounded-full border-[3px] border-black px-5 text-[22px] font-bold min-h-[56px] bg-white" /></label>
-                </div>
-              </div>
-              <div className="mt-8">
-                <div className="text-[18px] font-bold leading-tight">Get ready + drive?</div>
-                <div className="mt-3 flex flex-wrap gap-3">
-                  {[30,45,60,90].map(m=>{
-                    const total=preferences.commute+preferences.prep;
-                    return <button key={m} onClick={()=>{ const half=Math.floor(m/2); setPreferences({...preferences, commute:m-half, prep:half}); beepDone(); }} className={`tap rounded-full border-[3px] px-5 text-[18px] font-bold min-h-[52px] ${total===m? "bg-black text-white":"bg-white border-black"}`}>{m>=60? `${Math.floor(m/60)}h${m%60? "30m":""}` : `${m}m`}</button>;
-                  })}
-                </div>
-              </div>
-              <div className="mt-8">
-                <div className="text-[18px] font-bold leading-tight">Sleep you want?</div>
-                <div className="mt-3 flex flex-wrap gap-3">
-                  {[6,7,7.5,8].map(h=>(
-                    <button key={h} onClick={()=>setPreferences({...preferences, desiredSleep:h})} className={`tap rounded-full px-5 border-[3px] text-[18px] font-bold min-h-[52px] ${preferences.desiredSleep===h? "bg-black text-white":"bg-white border-black"}`}>{h}h</button>
-                  ))}
-                </div>
-              </div>
-              <div className="mt-8 space-y-3">
-                <button onClick={()=>setPreferences({...preferences, daytimeSleeper:!preferences.daytimeSleeper})} className={`tap w-full rounded-[16px] border-[3px] border-black px-5 py-3 flex items-center justify-between text-left min-h-[56px] ${preferences.daytimeSleeper? "bg-black text-white":"bg-white"}`}><span className="text-[18px] font-bold">I sleep in day</span><span className="font-extrabold">{preferences.daytimeSleeper? "ON ✓":"OFF"}</span></button>
-                <button onClick={()=>setPreferences({...preferences, trainedToday:!preferences.trainedToday})} className={`tap w-full rounded-[16px] border-[3px] border-black px-5 py-3 flex items-center justify-between text-left min-h-[56px] ${preferences.trainedToday? "bg-green-600 text-white":"bg-white"}`}><span className="text-[18px] font-bold">Hard work / play today</span><span className="font-extrabold">{preferences.trainedToday? "YES ✓":"NO"}</span></button>
-              </div>
-              <div className="mt-6 rounded-xl bg-zinc-100 border-2 border-black p-4 text-[14px] leading-relaxed">No bulky view: card tap = 1 extra line only. Main action + why + Done.</div>
-            </div>
-          </div>
-        )}
-      </main>
-
-      <div className="fixed bottom-0 inset-x-0 z-40 bg-white border-t-[4px] border-black">
-        <div className="max-w-[720px] mx-auto grid grid-cols-4 gap-0">
-          {[
-            { id:"sleep", label:"SLEEP", icon:Moon, desc:"1 card" },
-            { id:"time", label:"TIME", icon:Clock3, desc:"1 card" },
-            { id:"food", label:"FOOD", icon:UtensilsCrossed, desc:"1 card" },
-            { id:"setup", label:"SETUP", icon:Settings2, desc:"set work" },
-          ].map(tab=>{
-            const active=activeTab===tab.id; const Icon=tab.icon;
-            return (
-              <button key={tab.id} onClick={()=>{ setActiveTab(tab.id as any); setExpanded(null); beepDone(); }} className={`tap flex flex-col items-center justify-center py-4 min-h-[92px] border-r last:border-r-0 border-black gap-1 ${active? "bg-black text-white":"bg-white text-black"}`}>
-                <Icon className="w-8 h-8 mb-0.5"/><span className="text-[16px] font-extrabold tracking-widest mt-1 leading-tight">{tab.label}</span><span className={`text-[11px] leading-relaxed ${active? "text-white/70":"text-black/60"}`}>{tab.desc}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {toast && (
-        <div className="fixed bottom-[110px] left-1/2 -translate-x-1/2 z-50 max-w-[90%] rounded-full bg-black text-white px-6 py-3 text-[18px] font-bold border-[3px] border-white shadow-[0_8px_24px_rgba(0,0,0,0.4)] leading-relaxed">
-          {toast}
-        </div>
-      )}
-
-      {showNowMenu && (
-        <div className="fixed inset-0 z-[70] flex flex-col justify-end">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={()=>setShowNowMenu(false)} />
-          <div className="relative bg-white rounded-t-[32px] border-t-[4px] border-x-[3px] border-black shadow-[0_-12px_40px_rgba(0,0,0,0.25)] max-w-[720px] w-full mx-auto p-6 md:p-8 pb-10">
-            <div className="flex items-center justify-between gap-6 mb-6">
-              <div><div className="display text-[28px] leading-tight tracking-tight">••• menu — no bulky view</div><div className="text-[16px] leading-relaxed mt-1 text-zinc-600">Control NOW card. Tap card = 1 line only.</div></div>
-              <button onClick={()=>setShowNowMenu(false)} className="tap h-12 w-12 rounded-full bg-black text-white grid place-items-center shrink-0"><X className="w-6 h-6"/></button>
-            </div>
-            <div className="space-y-4">
-              <button onClick={hideForOneHour} className="tap w-full rounded-[20px] bg-black text-white border-[3px] border-black px-6 py-5 text-left min-h-[72px] flex items-start gap-4"><span className="h-12 w-12 rounded-full bg-white text-black grid place-items-center shrink-0"><Clock className="w-7 h-7"/></span><span className="flex-1"><span className="text-[20px] font-extrabold leading-tight">Hide for 1 hour</span><span className="text-[14px] leading-relaxed text-white/70 mt-1 block">Hides NOW card 60 min. Auto returns.</span></span></button>
-              <button onClick={hideUntilTomorrow} className="tap w-full rounded-[20px] bg-white text-black border-[3px] border-black px-6 py-5 text-left min-h-[72px] flex items-start gap-4"><span className="h-12 w-12 rounded-full bg-amber-400 text-black border-2 border-black grid place-items-center shrink-0"><Sunrise className="w-7 h-7"/></span><span className="flex-1"><span className="text-[20px] font-extrabold leading-tight">Hide until tomorrow</span><span className="text-[14px] leading-relaxed text-zinc-600 mt-1 block">Until 6 AM tomorrow.</span></span></button>
-              <button onClick={togglePin} className={`tap w-full rounded-[20px] border-[3px] border-black px-6 py-5 text-left min-h-[72px] flex items-start gap-4 ${nowPinned? "bg-green-600 text-white":"bg-white text-black"}`}><span className={`h-12 w-12 rounded-full grid place-items-center shrink-0 border-2 ${nowPinned? "bg-white text-green-700 border-white":"bg-zinc-100 text-black border-black"}`}>{nowPinned? <PinOff className="w-7 h-7"/> : <Pin className="w-7 h-7"/>}</span><span className="flex-1"><span className="text-[20px] font-extrabold leading-tight">{nowPinned? "Unpin card" : "Keep it pinned"}</span><span className={`text-[14px] leading-relaxed mt-1 block ${nowPinned? "text-white/80":"text-zinc-600"}`}>{nowPinned? "Pinned always visible." : "Pin keeps NOW always visible."}</span></span></button>
-              <button onClick={()=>{ setShowNowMenu(false); toggleNowCollapsed(); }} className="tap w-full rounded-[20px] bg-zinc-100 text-black border-[3px] border-black px-6 py-4 flex items-center justify-between gap-4 min-h-[60px]"><span className="flex items-center gap-4"><span className="h-10 w-10 rounded-full bg-white border-2 border-black grid place-items-center"><ChevronDown className="w-6 h-6"/></span><span className="text-[18px] font-extrabold">Hide now</span></span><span className="text-[13px] text-zinc-600">Tap green pill to show</span></button>
-              <button onClick={()=>setShowNowMenu(false)} className="tap w-full rounded-full bg-white border-[3px] border-black min-h-[56px] text-[18px] font-extrabold">Close</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showHelp && (
-        <div className="fixed inset-0 z-[60] flex flex-col justify-end">
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={()=>setShowHelp(false)} />
-          <div className="relative bg-white rounded-t-[32px] border-t-[4px] border-x-[3px] border-black shadow-[0_-12px_40px_rgba(0,0,0,0.25)] max-w-[720px] w-full mx-auto p-6 md:p-8 pb-10">
-            <div className="flex items-center justify-between gap-6">
-              <div className="display text-[28px] leading-tight">How to use — no bulky view</div>
-              <button onClick={()=>setShowHelp(false)} className="tap h-12 w-12 rounded-full bg-black text-white grid place-items-center"><X className="w-6 h-6"/></button>
-            </div>
-            <div className="mt-6 space-y-4">
-              {[
-                { n:"1", t:"Set work time in SETUP — big buttons only." },
-                { n:"2", t:"Top shows what to do NOW — one sentence." },
-                { n:"3", t:"Tap any card — shows 1 extra line why. Tap again hides. No new screen." },
-                { n:"4", t:"Green button = main action. Circle = Done ✓" },
-              ].map(s=>(
-                <div key={s.n} className="rounded-[16px] border-[3px] border-black p-4 flex gap-4 bg-zinc-50">
-                  <div className="h-10 w-10 rounded-full bg-black text-white grid place-items-center font-extrabold shrink-0">{s.n}</div>
-                  <div className="text-[18px] font-bold leading-relaxed">{s.t}</div>
-                </div>
-              ))}
-              <div className="rounded-[16px] bg-green-50 border-[3px] border-green-600 p-4 text-[16px] leading-relaxed"><span className="font-extrabold">Flip-phone simple:</span> No View Details button. No modal. No chart. Only: action + 1 sentence why + Done.</div>
-              <button onClick={()=>setShowHelp(false)} className="tap w-full rounded-full bg-black text-white text-[20px] font-extrabold min-h-[60px]">Got it — start using ✓</button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+    catch { }
 }
-
+function App() {
+    const [now, setNow] = useState(() => new Date());
+    useEffect(() => { const id = setInterval(() => setNow(new Date()), 60000); return () => clearInterval(id); }, []);
+    const [preferences, setPreferences] = useLocalStorage("preferences_v2", {
+        nextShiftStart: defaultShiftStart(),
+        nextShiftEnd: defaultShiftEnd(),
+        commute: 35,
+        prep: 35,
+        desiredSleep: 7.5,
+        daytimeSleeper: false,
+        trainedToday: true,
+        heavySweat: false,
+        episodeLength: 42,
+    });
+    const [tasks, setTasks] = useLocalStorage("tasks", [
+        { id: "1", title: "Pack work bag", estimate: 10 },
+        { id: "2", title: "Eat dinner", estimate: 30 },
+        { id: "3", title: "Relax and wind down", estimate: 30 },
+    ]);
+    const [meals, setMeals] = useLocalStorage("meals", [
+        { id: "m1", at: new Date().toISOString(), description: "Oats + banana + milk", categories: ["fiber"] },
+    ]);
+    const [activeTab, setActiveTab] = useState("sleep");
+    const [showHelp, setShowHelp] = useState(false);
+    const [toast, setToast] = useState(null);
+    const [expanded, setExpanded] = useState(null);
+    const [nowCollapsed, setNowCollapsed] = useLocalStorage("nowCollapsed", false);
+    const [nowHiddenUntil, setNowHiddenUntil] = useLocalStorage("nowHiddenUntil", null);
+    const [showNowMenu, setShowNowMenu] = useState(false);
+    const [nowPinned, setNowPinned] = useLocalStorage("nowPinned", false);
+    const touchStartY = useRef(null);
+    const pillTouchStartY = useRef(null);
+    const shiftStart = useMemo(() => parseLocalDateTime(preferences.nextShiftStart), [preferences.nextShiftStart]);
+    const shiftEnd = useMemo(() => parseLocalDateTime(preferences.nextShiftEnd), [preferences.nextShiftEnd]);
+    const wakeTarget = useMemo(() => { const d = new Date(shiftStart); d.setMinutes(d.getMinutes() - preferences.commute - preferences.prep); return d; }, [shiftStart, preferences.commute, preferences.prep]);
+    const sleepStart = useMemo(() => { const d = new Date(wakeTarget); d.setMinutes(d.getMinutes() - preferences.desiredSleep * 60); return d; }, [wakeTarget, preferences.desiredSleep]);
+    const sleepEnd = wakeTarget;
+    const availableMinutes = useMemo(() => Math.max(0, (sleepStart.getTime() - now.getTime()) / 60000), [sleepStart, now]);
+    const priority = useMemo(() => {
+        const hoursBeforeBed = (sleepStart.getTime() - now.getTime()) / 3600000;
+        if (hoursBeforeBed < 0.6 && hoursBeforeBed > -2)
+            return { title: "Lights low. Phone away. 5-min calm.", why: "Sleep time is starting — small calm now protects tomorrow.", action: "Start wind-down now" };
+        if (hoursBeforeBed < 2.5 && hoursBeforeBed > 0)
+            return { title: `Don't start a new show after 9pm`, why: `A ${preferences.episodeLength}-min show steals sleep. Save for tomorrow.`, action: "Save show for tomorrow" };
+        return { title: "Pack work bag now — saves 10 min tomorrow", why: "Getting ready now means less rushing and more sleep.", action: "Pack bag now" };
+    }, [sleepStart, now, preferences.episodeLength]);
+    const nowSentence = useMemo(() => `${fmtDateLong(shiftStart)} work at ${fmtTime(shiftStart)}. ${priority.title}`, [shiftStart, priority.title]);
+    useEffect(() => { if (!toast)
+        return; const t = setTimeout(() => setToast(null), 3000); return () => clearTimeout(t); }, [toast]);
+    useEffect(() => {
+        if (!nowHiddenUntil)
+            return;
+        const check = () => {
+            if (Date.now() >= nowHiddenUntil) {
+                setNowHiddenUntil(null);
+                setNowCollapsed(false);
+                setToast("What to do now is back");
+            }
+        };
+        check();
+        const id = setInterval(check, 30000);
+        return () => clearInterval(id);
+    }, [nowHiddenUntil]);
+    const isTempHidden = !!(nowHiddenUntil && nowHiddenUntil > Date.now());
+    const isNowCollapsedEffective = nowCollapsed || isTempHidden;
+    const hiddenMinutesLeft = useMemo(() => {
+        if (!nowHiddenUntil)
+            return 0;
+        return Math.max(0, Math.ceil((nowHiddenUntil - Date.now()) / 60000));
+    }, [nowHiddenUntil, now]);
+    function triggerHaptic() { var _a, _b; try {
+        (_b = (_a = navigator).vibrate) === null || _b === void 0 ? void 0 : _b.call(_a, 20);
+    }
+    catch { } }
+    function toggleNowCollapsed() {
+        if (nowPinned && !isNowCollapsedEffective) {
+            setToast("Unpin first to hide — tap ••• then Unpin");
+            setShowNowMenu(true);
+            return;
+        }
+        triggerHaptic();
+        beepDone();
+        if (isNowCollapsedEffective) {
+            setNowCollapsed(false);
+            setNowHiddenUntil(null);
+            setToast("Showing what to do now");
+        }
+        else {
+            setNowCollapsed(true);
+            setToast("Hidden — tap green pill to show");
+        }
+        setShowNowMenu(false);
+    }
+    function hideForOneHour() {
+        triggerHaptic();
+        const until = Date.now() + 60 * 60 * 1000;
+        setNowHiddenUntil(until);
+        setNowCollapsed(true);
+        setShowNowMenu(false);
+        setToast("Hidden for 1 hour");
+        beepDone();
+    }
+    function hideUntilTomorrow() {
+        triggerHaptic();
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(6, 0, 0, 0);
+        setNowHiddenUntil(tomorrow.getTime());
+        setNowCollapsed(true);
+        setShowNowMenu(false);
+        setToast("Hidden until 6 AM");
+        beepDone();
+    }
+    function togglePin() {
+        triggerHaptic();
+        const next = !nowPinned;
+        setNowPinned(next);
+        if (next) {
+            setNowCollapsed(false);
+            setNowHiddenUntil(null);
+        }
+        setShowNowMenu(false);
+        setToast(next ? "Pinned — stays visible" : "Unpinned");
+        beepDone();
+    }
+    function logMeal(desc) { const m = { id: Date.now().toString(), at: new Date().toISOString(), description: desc, categories: ["energy"] }; setMeals([m, ...meals]); setToast(`Saved: ${desc}`); beepDone(); }
+    const totalPlanned = tasks.filter(t => !t.done).reduce((s, t) => s + t.estimate, 0);
+    const quietMessage = `Please be quiet — ${preferences.daytimeSleeper ? "I sleep in day" : "I sleep for early work"}: ${fmtTime(sleepStart)} to ${fmtTime(sleepEnd)}. Headphones please. Text, don't call. Thanks!`;
+    const foodNeedsPlain = useMemo(() => {
+        if (preferences.trainedToday && preferences.heavySweat)
+            return "You sweated a lot. Water + salty snack + banana. That's the best choice now.";
+        if (preferences.trainedToday)
+            return "You moved a lot. Water + yogurt + banana. Small action that helps most.";
+        return "Balanced meal + water. Rice, beans, chicken or tofu, fruit, yogurt.";
+    }, [preferences.trainedToday, preferences.heavySweat]);
+    return (React.createElement("div", { className: "min-h-screen bg-white text-black selection:bg-black selection:text-white" },
+        React.createElement("style", null, `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&family=Fraunces:opsz,wght@9..144,700&display=swap'); *{font-family:Inter,system-ui,sans-serif} .display{font-family:Fraunces,serif} button:active{transform:scale(0.985)} .tap{ min-height:56px } .now-card-transition{ transition: max-height 380ms ease, opacity 320ms ease, transform 320ms ease } .pulse-green{ animation: pulseGreen 2s infinite } @keyframes pulseGreen{ 0%{ box-shadow:0 0 0 0 rgba(22,163,74,0.6)} 70%{ box-shadow:0 0 0 10px rgba(22,163,74,0)} 100%{ box-shadow:0 0 0 0 rgba(22,163,74,0)} } body{ line-height:1.6 }`),
+        React.createElement("div", { className: "sticky top-0 z-30 bg-white border-b-[3px] border-black" },
+            React.createElement("div", { className: "max-w-[720px] mx-auto px-5 pt-5 pb-5" },
+                React.createElement("div", { className: "flex items-start justify-between gap-6" },
+                    React.createElement("div", { className: "space-y-1" },
+                        React.createElement("div", { className: "display text-[28px] sm:text-[34px] leading-tight tracking-tight mt-2 mb-1" }, "WorkWell \u2014 No Bulky View"),
+                        React.createElement("div", { className: "text-[15px] leading-relaxed font-bold" },
+                            "Next: ",
+                            fmtDateLong(shiftStart),
+                            " at ",
+                            fmtTime(shiftStart),
+                            "\u2013",
+                            fmtTime(shiftEnd))),
+                    React.createElement("button", { onClick: () => setShowHelp(true), className: "tap rounded-full bg-black text-white px-5 text-[18px] font-bold flex items-center gap-3 shrink-0" },
+                        React.createElement(HelpCircle, { className: "w-6 h-6" }),
+                        " Help")),
+                React.createElement("div", { className: "mt-6" },
+                    React.createElement("div", { id: "now-card-region", role: "region", "aria-label": "What to do now", "aria-hidden": isNowCollapsedEffective ? true : false, className: `now-card-transition overflow-hidden ${isNowCollapsedEffective ? "max-h-0 opacity-0 pointer-events-none" : "max-h-[520px] opacity-100"}`, onTouchStart: (e) => { touchStartY.current = e.touches[0].clientY; }, onTouchEnd: (e) => {
+                            if (touchStartY.current === null)
+                                return;
+                            const delta = e.changedTouches[0].clientY - touchStartY.current;
+                            if (delta < -60) {
+                                toggleNowCollapsed();
+                            }
+                            touchStartY.current = null;
+                        } },
+                        React.createElement("div", { className: "rounded-[24px] bg-black text-white p-6 flex gap-4 items-start" },
+                            React.createElement("div", { className: "mt-0.5 shrink-0 h-11 w-11 rounded-full bg-white text-black grid place-items-center" },
+                                React.createElement(SunMedium, { className: "h-6 w-6" })),
+                            React.createElement("div", { className: "min-w-0 flex-1 space-y-2" },
+                                React.createElement("div", { className: "text-[13px] uppercase tracking-[0.18em] font-bold opacity-80" }, "What to do NOW"),
+                                React.createElement("div", { className: "text-[20px] sm:text-[22px] leading-snug font-bold mt-2 mb-1" }, nowSentence),
+                                React.createElement("div", { className: "text-[13px] leading-relaxed opacity-70" }, "Tap card for 1-line why. No extra screen.")),
+                            React.createElement("button", { onClick: (e) => { e.stopPropagation(); speak(nowSentence); setToast("Reading aloud"); }, "aria-label": "Read it to me", className: "tap h-14 w-14 rounded-full bg-white text-black grid place-items-center shrink-0 border-2 border-white" },
+                                React.createElement(Volume2, { className: "w-7 h-7" }))),
+                        React.createElement("div", { className: "mt-4 flex gap-4 items-stretch" },
+                            React.createElement("button", { "aria-expanded": !isNowCollapsedEffective, "aria-controls": "now-card-region", onClick: toggleNowCollapsed, className: "tap flex-1 rounded-[16px] bg-zinc-100 border-[3px] border-black flex items-center justify-center gap-3 text-[18px] font-extrabold min-h-[56px] h-[56px]" },
+                                React.createElement("span", { className: "text-[20px]" }, "\u25BC"),
+                                React.createElement("span", null, "Tap to hide"),
+                                React.createElement(ChevronDown, { className: "w-7 h-7 animate-bounce" })),
+                            React.createElement("button", { "aria-label": "More options", onClick: () => setShowNowMenu(v => !v), className: "tap h-[56px] w-[64px] rounded-[16px] bg-white border-[3px] border-black grid place-items-center" },
+                                React.createElement(EllipsisVertical, { className: "w-7 h-7" })))),
+                    React.createElement("div", { className: `now-card-transition overflow-hidden ${isNowCollapsedEffective ? "max-h-[100px] opacity-100 mt-3" : "max-h-0 opacity-0 pointer-events-none"}`, "aria-hidden": !isNowCollapsedEffective },
+                        React.createElement("button", { "aria-expanded": !isNowCollapsedEffective, "aria-controls": "now-card-region", onClick: toggleNowCollapsed, onTouchStart: (e) => { pillTouchStartY.current = e.touches[0].clientY; }, onTouchEnd: (e) => {
+                                if (pillTouchStartY.current === null)
+                                    return;
+                                const delta = e.changedTouches[0].clientY - pillTouchStartY.current;
+                                if (delta > 60) {
+                                    toggleNowCollapsed();
+                                }
+                                pillTouchStartY.current = null;
+                            }, className: "tap w-full rounded-full bg-white border-[3px] border-green-600 min-h-[56px] px-6 flex items-center justify-between gap-4 pulse-green" },
+                            React.createElement("span", { className: "flex items-center gap-3 text-left" },
+                                React.createElement("span", { className: "h-10 w-10 rounded-full bg-green-600 text-white grid place-items-center shrink-0" },
+                                    React.createElement(ChevronUp, { className: "w-6 h-6" })),
+                                React.createElement("span", { className: "text-[18px] font-extrabold leading-tight tracking-wide" },
+                                    "\u25B2 What to do now \u2014 tap to show ",
+                                    isTempHidden && hiddenMinutesLeft > 0 && React.createElement("span", { className: "ml-2 font-bold text-green-700" },
+                                        "(",
+                                        hiddenMinutesLeft,
+                                        "m)"))),
+                            React.createElement("span", { className: "shrink-0 text-[14px] bg-green-50 border-2 border-green-600 rounded-full px-4 py-1.5 font-bold tracking-widest" }, "SHOW")))))),
+        React.createElement("main", { className: "max-w-[720px] mx-auto px-5 py-6 pb-40 space-y-6" },
+            activeTab === "sleep" && (React.createElement("div", { className: "space-y-6" },
+                React.createElement("div", { onClick: () => setExpanded(expanded === 'sleep' ? null : 'sleep'), className: "rounded-[32px] bg-white border-[3px] border-black p-6 md:p-8 shadow-[8px_8px_0px_0px_black] cursor-pointer" },
+                    React.createElement("div", { className: "flex items-start justify-between gap-4" },
+                        React.createElement("div", { className: "flex items-center gap-3" },
+                            React.createElement(Moon, { className: "w-7 h-7" }),
+                            React.createElement("h2", { className: "display text-[26px] leading-tight" }, "Sleep time")),
+                        React.createElement("span", { className: "text-[12px] font-bold tracking-widest border-2 border-black rounded-full px-3 py-1 bg-zinc-100" }, expanded === 'sleep' ? "TAP TO HIDE" : "TAP FOR WHY")),
+                    React.createElement("div", { className: "mt-4" },
+                        React.createElement("div", { className: "text-[15px] font-bold uppercase tracking-widest opacity-70" },
+                            "Up at ",
+                            fmtTime(sleepEnd),
+                            " \u2022 Sleep ",
+                            fmtTime(sleepStart),
+                            "\u2013",
+                            fmtTime(sleepEnd)),
+                        React.createElement("div", { className: "text-[24px] font-extrabold leading-tight mt-3" }, priority.title),
+                        React.createElement("div", { className: "text-[18px] leading-relaxed mt-2" }, priority.why)),
+                    expanded === 'sleep' && (React.createElement("div", { className: "mt-4 rounded-[16px] bg-zinc-100 border-2 border-black p-4 text-[16px] leading-relaxed" },
+                        "protected sleep window = your sleep time that we protect. If you watch ",
+                        preferences.episodeLength,
+                        "m now, you get ",
+                        fmtDuration(Math.max(0, preferences.desiredSleep * 60 - Math.max(0, (now.getTime() + preferences.episodeLength * 60000 - sleepStart.getTime()) / 60000))),
+                        " sleep instead of ",
+                        fmtDuration(preferences.desiredSleep * 60),
+                        ".")),
+                    React.createElement("button", { onClick: (e) => { e.stopPropagation(); setToast(`${priority.action} — good choice!`); beepDone(); }, className: "tap mt-5 w-full rounded-full bg-green-600 text-white text-[22px] font-extrabold border-[3px] border-black min-h-[64px]" },
+                        priority.action,
+                        " \u2713"),
+                    React.createElement("div", { className: "mt-3 text-[13px] text-center font-bold opacity-60" }, "Card tap = 1 extra line. No new screen. Done button = action.")),
+                React.createElement("div", { onClick: () => setExpanded(expanded === 'quiet' ? null : 'quiet'), className: "rounded-[28px] bg-white border-[3px] border-black p-6 cursor-pointer" },
+                    React.createElement("div", { className: "flex items-center justify-between gap-4" },
+                        React.createElement("div", { className: "text-[20px] font-extrabold leading-tight" }, "Quiet note for family \u2014 tap to show"),
+                        React.createElement("span", { className: "text-[12px] font-bold tracking-widest border-2 border-black rounded-full px-3 py-1 bg-zinc-100 shrink-0" }, expanded === 'quiet' ? "HIDE" : "SHOW")),
+                    React.createElement("div", { className: "text-[16px] leading-relaxed mt-2" }, "One sentence to show family when you sleep."),
+                    expanded === 'quiet' && (React.createElement("div", { className: "mt-4 rounded-[16px] bg-black text-white p-5 text-[20px] font-bold leading-tight text-center" },
+                        quietMessage,
+                        React.createElement("div", { className: "mt-4 flex gap-3" },
+                            React.createElement("button", { onClick: (e) => { var _a; e.stopPropagation(); (_a = navigator.clipboard) === null || _a === void 0 ? void 0 : _a.writeText(quietMessage); setToast("Copied"); }, className: "tap flex-1 rounded-full bg-white text-black text-[16px] font-bold" }, "Copy"),
+                            React.createElement("button", { onClick: (e) => { e.stopPropagation(); speak(quietMessage); }, className: "tap flex-1 rounded-full bg-zinc-800 text-white text-[16px] font-bold border-2 border-white" }, "Read aloud")))),
+                    React.createElement("button", { onClick: (e) => { e.stopPropagation(); setToast("Note ready — show family"); beepDone(); }, className: "tap mt-4 w-full rounded-full bg-black text-white text-[18px] font-bold min-h-[56px]" }, "Done \u2014 note ready \u2713")))),
+            activeTab === "time" && (React.createElement("div", { className: "space-y-6" },
+                React.createElement("div", { onClick: () => setExpanded(expanded === 'time' ? null : 'time'), className: "rounded-[32px] bg-black text-white border-[3px] border-black p-6 md:p-8 shadow-[8px_8px_0px_0px_white] cursor-pointer" },
+                    React.createElement("div", { className: "flex items-center justify-between gap-4" },
+                        React.createElement("div", { className: "flex items-center gap-3" },
+                            React.createElement(Clock3, { className: "w-7 h-7" }),
+                            React.createElement("h2", { className: "display text-[26px] leading-tight" }, "Evening time")),
+                        React.createElement("span", { className: "text-[12px] font-bold tracking-widest border-2 border-white rounded-full px-3 py-1 bg-white text-black" }, expanded === 'time' ? "HIDE" : "WHY?")),
+                    React.createElement("div", { className: "display text-[44px] leading-none mt-5" },
+                        fmtDuration(availableMinutes),
+                        " free"),
+                    React.createElement("div", { className: "text-[18px] leading-relaxed mt-2" },
+                        "Until sleep at ",
+                        fmtTime(sleepStart),
+                        " \u2022 You planned ",
+                        fmtDuration(totalPlanned)),
+                    expanded === 'time' && (React.createElement("div", { className: "mt-4 rounded-[12px] bg-white text-black p-4 text-[15px] leading-relaxed border-2 border-white" }, "available time = time you have before bed. If planned > free, sleep suffers. Best choice = keep sleep.")),
+                    React.createElement("div", { className: "mt-6 rounded-[16px] bg-white text-black p-4 border-2 border-white" },
+                        React.createElement("div", { className: "text-[16px] font-bold" }, "Tonight \u2014 tap circle when done"),
+                        React.createElement("div", { className: "mt-3 space-y-3" }, tasks.map(t => (React.createElement("div", { key: t.id, className: "flex items-center justify-between gap-3" },
+                            React.createElement("button", { onClick: (e) => { e.stopPropagation(); setTasks(tasks.map(x => x.id === t.id ? { ...x, done: !x.done } : x)); if (!t.done)
+                                    beepDone(); }, className: "flex items-center gap-3 text-left flex-1 min-h-[48px]" },
+                                React.createElement("span", { className: `h-9 w-9 rounded-full border-2 border-black grid place-items-center shrink-0 ${t.done ? "bg-green-600 text-white" : "bg-white text-black"}` }, t.done ? "✓" : ""),
+                                React.createElement("span", { className: `text-[18px] font-bold leading-snug ${t.done ? "line-through opacity-60" : ""}` },
+                                    t.title,
+                                    " (",
+                                    t.estimate,
+                                    "m)")),
+                            React.createElement("button", { onClick: (e) => { e.stopPropagation(); setTasks(tasks.filter(x => x.id !== t.id)); }, className: "h-9 w-9 grid place-items-center rounded-full border-2 border-black bg-white text-black" },
+                                React.createElement(X, { className: "w-4 h-4" }))))))),
+                    React.createElement("button", { onClick: (e) => { e.stopPropagation(); const first = tasks.find(t => !t.done); if (first) {
+                            setToast(`Do now: ${first.title} — ${first.estimate} min`);
+                            speak(first.title);
+                        }
+                        else {
+                            setToast("All done — rest now");
+                        } beepDone(); }, className: "tap mt-6 w-full rounded-full bg-green-500 text-black text-[20px] font-extrabold border-[3px] border-white min-h-[60px]" }, "Main action: Do one now \u2713")))),
+            activeTab === "food" && (React.createElement("div", { className: "space-y-6" },
+                React.createElement("div", { onClick: () => setExpanded(expanded === 'food' ? null : 'food'), className: "rounded-[32px] bg-white border-[3px] border-black p-6 md:p-8 cursor-pointer" },
+                    React.createElement("div", { className: "flex items-center justify-between gap-4" },
+                        React.createElement("div", { className: "flex items-center gap-3" },
+                            React.createElement(UtensilsCrossed, { className: "w-7 h-7" }),
+                            React.createElement("h2", { className: "display text-[26px] leading-tight" }, "Best food next")),
+                        React.createElement("span", { className: "text-[12px] font-bold tracking-widest border-2 border-black rounded-full px-3 py-1 bg-zinc-100" }, expanded === 'food' ? "HIDE" : "WHY?")),
+                    React.createElement("div", { className: "mt-4 rounded-[20px] bg-green-600 text-white border-[3px] border-black p-5" },
+                        React.createElement("div", { className: "text-[20px] font-bold leading-snug" }, foodNeedsPlain),
+                        React.createElement("div", { className: "text-[14px] leading-relaxed mt-2 opacity-90" }, "One sentence why: best available option right now.")),
+                    React.createElement("div", { className: "mt-6 space-y-3" }, [
+                        { name: "Yogurt + banana + nuts", icon: "🍌" },
+                        { name: "Rice + beans + fruit", icon: "🍚" },
+                        { name: "Turkey sandwich + water", icon: "🥪" },
+                    ].map(f => (React.createElement("button", { key: f.name, onClick: (e) => { e.stopPropagation(); logMeal(f.name); }, className: "tap w-full rounded-[20px] border-[3px] border-black bg-white px-5 py-4 flex items-center justify-between text-left min-h-[60px]" },
+                        React.createElement("span", { className: "flex items-center gap-3" },
+                            React.createElement("span", { className: "text-[24px]" }, f.icon),
+                            React.createElement("span", { className: "text-[18px] font-bold leading-snug" }, f.name)),
+                        React.createElement("span", { className: "rounded-full bg-black text-white px-4 py-1 text-[14px] font-bold shrink-0" }, "I ate this \u2713"))))),
+                    expanded === 'food' && (React.createElement("div", { className: "mt-4 rounded-[16px] bg-amber-50 border-[3px] border-amber-600 p-4 text-[16px] leading-relaxed" }, "Tap I ate this = Done. Extra line shows why \u2014 no new screen. If kidney/heart limits, ask doctor before adding salt.")),
+                    React.createElement("button", { onClick: (e) => { e.stopPropagation(); logMeal("Balanced meal + water"); }, className: "tap mt-5 w-full rounded-full bg-black text-white text-[18px] font-bold min-h-[60px]" }, "Done \u2014 ate something good \u2713")))),
+            activeTab === "setup" && (React.createElement("div", { className: "space-y-6" },
+                React.createElement("div", { className: "rounded-[32px] bg-white border-[3px] border-black p-6 md:p-8" },
+                    React.createElement("div", { className: "flex items-center gap-3" },
+                        React.createElement(Settings2, { className: "w-7 h-7" }),
+                        React.createElement("h2", { className: "display text-[26px] leading-tight" }, "Setup \u2014 work time")),
+                    React.createElement("div", { className: "mt-5" },
+                        React.createElement("div", { className: "text-[18px] font-extrabold leading-tight" }, "What time is work tomorrow?"),
+                        React.createElement("div", { className: "text-[14px] leading-relaxed opacity-70 mt-1" }, "One tap to set. No extra view."),
+                        React.createElement("div", { className: "mt-4 grid grid-cols-2 gap-4" },
+                            React.createElement("label", { className: "block" },
+                                React.createElement("span", { className: "text-[15px] font-bold" }, "Starts"),
+                                React.createElement("input", { type: "time", value: preferences.nextShiftStart.slice(11, 16), onChange: e => { const d = preferences.nextShiftStart.slice(0, 10); setPreferences({ ...preferences, nextShiftStart: `${d}T${e.target.value}` }); }, className: "tap mt-2 w-full rounded-full border-[3px] border-black px-5 text-[22px] font-bold min-h-[56px] bg-white" })),
+                            React.createElement("label", { className: "block" },
+                                React.createElement("span", { className: "text-[15px] font-bold" }, "Ends"),
+                                React.createElement("input", { type: "time", value: preferences.nextShiftEnd.slice(11, 16), onChange: e => { const d = preferences.nextShiftEnd.slice(0, 10); setPreferences({ ...preferences, nextShiftEnd: `${d}T${e.target.value}` }); }, className: "tap mt-2 w-full rounded-full border-[3px] border-black px-5 text-[22px] font-bold min-h-[56px] bg-white" })))),
+                    React.createElement("div", { className: "mt-8" },
+                        React.createElement("div", { className: "text-[18px] font-bold leading-tight" }, "Get ready + drive?"),
+                        React.createElement("div", { className: "mt-3 flex flex-wrap gap-3" }, [30, 45, 60, 90].map(m => {
+                            const total = preferences.commute + preferences.prep;
+                            return React.createElement("button", { key: m, onClick: () => { const half = Math.floor(m / 2); setPreferences({ ...preferences, commute: m - half, prep: half }); beepDone(); }, className: `tap rounded-full border-[3px] px-5 text-[18px] font-bold min-h-[52px] ${total === m ? "bg-black text-white" : "bg-white border-black"}` }, m >= 60 ? `${Math.floor(m / 60)}h${m % 60 ? "30m" : ""}` : `${m}m`);
+                        }))),
+                    React.createElement("div", { className: "mt-8" },
+                        React.createElement("div", { className: "text-[18px] font-bold leading-tight" }, "Sleep you want?"),
+                        React.createElement("div", { className: "mt-3 flex flex-wrap gap-3" }, [6, 7, 7.5, 8].map(h => (React.createElement("button", { key: h, onClick: () => setPreferences({ ...preferences, desiredSleep: h }), className: `tap rounded-full px-5 border-[3px] text-[18px] font-bold min-h-[52px] ${preferences.desiredSleep === h ? "bg-black text-white" : "bg-white border-black"}` },
+                            h,
+                            "h"))))),
+                    React.createElement("div", { className: "mt-8 space-y-3" },
+                        React.createElement("button", { onClick: () => setPreferences({ ...preferences, daytimeSleeper: !preferences.daytimeSleeper }), className: `tap w-full rounded-[16px] border-[3px] border-black px-5 py-3 flex items-center justify-between text-left min-h-[56px] ${preferences.daytimeSleeper ? "bg-black text-white" : "bg-white"}` },
+                            React.createElement("span", { className: "text-[18px] font-bold" }, "I sleep in day"),
+                            React.createElement("span", { className: "font-extrabold" }, preferences.daytimeSleeper ? "ON ✓" : "OFF")),
+                        React.createElement("button", { onClick: () => setPreferences({ ...preferences, trainedToday: !preferences.trainedToday }), className: `tap w-full rounded-[16px] border-[3px] border-black px-5 py-3 flex items-center justify-between text-left min-h-[56px] ${preferences.trainedToday ? "bg-green-600 text-white" : "bg-white"}` },
+                            React.createElement("span", { className: "text-[18px] font-bold" }, "Hard work / play today"),
+                            React.createElement("span", { className: "font-extrabold" }, preferences.trainedToday ? "YES ✓" : "NO"))),
+                    React.createElement("div", { className: "mt-6 rounded-xl bg-zinc-100 border-2 border-black p-4 text-[14px] leading-relaxed" }, "No bulky view: card tap = 1 extra line only. Main action + why + Done."))))),
+        React.createElement("div", { className: "fixed bottom-0 inset-x-0 z-40 bg-white border-t-[4px] border-black" },
+            React.createElement("div", { className: "max-w-[720px] mx-auto grid grid-cols-4 gap-0" }, [
+                { id: "sleep", label: "SLEEP", icon: Moon, desc: "1 card" },
+                { id: "time", label: "TIME", icon: Clock3, desc: "1 card" },
+                { id: "food", label: "FOOD", icon: UtensilsCrossed, desc: "1 card" },
+                { id: "setup", label: "SETUP", icon: Settings2, desc: "set work" },
+            ].map(tab => {
+                const active = activeTab === tab.id;
+                const Icon = tab.icon;
+                return (React.createElement("button", { key: tab.id, onClick: () => { setActiveTab(tab.id); setExpanded(null); beepDone(); }, className: `tap flex flex-col items-center justify-center py-4 min-h-[92px] border-r last:border-r-0 border-black gap-1 ${active ? "bg-black text-white" : "bg-white text-black"}` },
+                    React.createElement(Icon, { className: "w-8 h-8 mb-0.5" }),
+                    React.createElement("span", { className: "text-[16px] font-extrabold tracking-widest mt-1 leading-tight" }, tab.label),
+                    React.createElement("span", { className: `text-[11px] leading-relaxed ${active ? "text-white/70" : "text-black/60"}` }, tab.desc)));
+            }))),
+        toast && (React.createElement("div", { className: "fixed bottom-[110px] left-1/2 -translate-x-1/2 z-50 max-w-[90%] rounded-full bg-black text-white px-6 py-3 text-[18px] font-bold border-[3px] border-white shadow-[0_8px_24px_rgba(0,0,0,0.4)] leading-relaxed" }, toast)),
+        showNowMenu && (React.createElement("div", { className: "fixed inset-0 z-[70] flex flex-col justify-end" },
+            React.createElement("div", { className: "absolute inset-0 bg-black/60 backdrop-blur-sm", onClick: () => setShowNowMenu(false) }),
+            React.createElement("div", { className: "relative bg-white rounded-t-[32px] border-t-[4px] border-x-[3px] border-black shadow-[0_-12px_40px_rgba(0,0,0,0.25)] max-w-[720px] w-full mx-auto p-6 md:p-8 pb-10" },
+                React.createElement("div", { className: "flex items-center justify-between gap-6 mb-6" },
+                    React.createElement("div", null,
+                        React.createElement("div", { className: "display text-[28px] leading-tight tracking-tight" }, "\u2022\u2022\u2022 menu \u2014 no bulky view"),
+                        React.createElement("div", { className: "text-[16px] leading-relaxed mt-1 text-zinc-600" }, "Control NOW card. Tap card = 1 line only.")),
+                    React.createElement("button", { onClick: () => setShowNowMenu(false), className: "tap h-12 w-12 rounded-full bg-black text-white grid place-items-center shrink-0" },
+                        React.createElement(X, { className: "w-6 h-6" }))),
+                React.createElement("div", { className: "space-y-4" },
+                    React.createElement("button", { onClick: hideForOneHour, className: "tap w-full rounded-[20px] bg-black text-white border-[3px] border-black px-6 py-5 text-left min-h-[72px] flex items-start gap-4" },
+                        React.createElement("span", { className: "h-12 w-12 rounded-full bg-white text-black grid place-items-center shrink-0" },
+                            React.createElement(Clock, { className: "w-7 h-7" })),
+                        React.createElement("span", { className: "flex-1" },
+                            React.createElement("span", { className: "text-[20px] font-extrabold leading-tight" }, "Hide for 1 hour"),
+                            React.createElement("span", { className: "text-[14px] leading-relaxed text-white/70 mt-1 block" }, "Hides NOW card 60 min. Auto returns."))),
+                    React.createElement("button", { onClick: hideUntilTomorrow, className: "tap w-full rounded-[20px] bg-white text-black border-[3px] border-black px-6 py-5 text-left min-h-[72px] flex items-start gap-4" },
+                        React.createElement("span", { className: "h-12 w-12 rounded-full bg-amber-400 text-black border-2 border-black grid place-items-center shrink-0" },
+                            React.createElement(Sunrise, { className: "w-7 h-7" })),
+                        React.createElement("span", { className: "flex-1" },
+                            React.createElement("span", { className: "text-[20px] font-extrabold leading-tight" }, "Hide until tomorrow"),
+                            React.createElement("span", { className: "text-[14px] leading-relaxed text-zinc-600 mt-1 block" }, "Until 6 AM tomorrow."))),
+                    React.createElement("button", { onClick: togglePin, className: `tap w-full rounded-[20px] border-[3px] border-black px-6 py-5 text-left min-h-[72px] flex items-start gap-4 ${nowPinned ? "bg-green-600 text-white" : "bg-white text-black"}` },
+                        React.createElement("span", { className: `h-12 w-12 rounded-full grid place-items-center shrink-0 border-2 ${nowPinned ? "bg-white text-green-700 border-white" : "bg-zinc-100 text-black border-black"}` }, nowPinned ? React.createElement(PinOff, { className: "w-7 h-7" }) : React.createElement(Pin, { className: "w-7 h-7" })),
+                        React.createElement("span", { className: "flex-1" },
+                            React.createElement("span", { className: "text-[20px] font-extrabold leading-tight" }, nowPinned ? "Unpin card" : "Keep it pinned"),
+                            React.createElement("span", { className: `text-[14px] leading-relaxed mt-1 block ${nowPinned ? "text-white/80" : "text-zinc-600"}` }, nowPinned ? "Pinned always visible." : "Pin keeps NOW always visible."))),
+                    React.createElement("button", { onClick: () => { setShowNowMenu(false); toggleNowCollapsed(); }, className: "tap w-full rounded-[20px] bg-zinc-100 text-black border-[3px] border-black px-6 py-4 flex items-center justify-between gap-4 min-h-[60px]" },
+                        React.createElement("span", { className: "flex items-center gap-4" },
+                            React.createElement("span", { className: "h-10 w-10 rounded-full bg-white border-2 border-black grid place-items-center" },
+                                React.createElement(ChevronDown, { className: "w-6 h-6" })),
+                            React.createElement("span", { className: "text-[18px] font-extrabold" }, "Hide now")),
+                        React.createElement("span", { className: "text-[13px] text-zinc-600" }, "Tap green pill to show")),
+                    React.createElement("button", { onClick: () => setShowNowMenu(false), className: "tap w-full rounded-full bg-white border-[3px] border-black min-h-[56px] text-[18px] font-extrabold" }, "Close"))))),
+        showHelp && (React.createElement("div", { className: "fixed inset-0 z-[60] flex flex-col justify-end" },
+            React.createElement("div", { className: "absolute inset-0 bg-black/50 backdrop-blur-sm", onClick: () => setShowHelp(false) }),
+            React.createElement("div", { className: "relative bg-white rounded-t-[32px] border-t-[4px] border-x-[3px] border-black shadow-[0_-12px_40px_rgba(0,0,0,0.25)] max-w-[720px] w-full mx-auto p-6 md:p-8 pb-10" },
+                React.createElement("div", { className: "flex items-center justify-between gap-6" },
+                    React.createElement("div", { className: "display text-[28px] leading-tight" }, "How to use \u2014 no bulky view"),
+                    React.createElement("button", { onClick: () => setShowHelp(false), className: "tap h-12 w-12 rounded-full bg-black text-white grid place-items-center" },
+                        React.createElement(X, { className: "w-6 h-6" }))),
+                React.createElement("div", { className: "mt-6 space-y-4" },
+                    [
+                        { n: "1", t: "Set work time in SETUP — big buttons only." },
+                        { n: "2", t: "Top shows what to do NOW — one sentence." },
+                        { n: "3", t: "Tap any card — shows 1 extra line why. Tap again hides. No new screen." },
+                        { n: "4", t: "Green button = main action. Circle = Done ✓" },
+                    ].map(s => (React.createElement("div", { key: s.n, className: "rounded-[16px] border-[3px] border-black p-4 flex gap-4 bg-zinc-50" },
+                        React.createElement("div", { className: "h-10 w-10 rounded-full bg-black text-white grid place-items-center font-extrabold shrink-0" }, s.n),
+                        React.createElement("div", { className: "text-[18px] font-bold leading-relaxed" }, s.t)))),
+                    React.createElement("div", { className: "rounded-[16px] bg-green-50 border-[3px] border-green-600 p-4 text-[16px] leading-relaxed" },
+                        React.createElement("span", { className: "font-extrabold" }, "Flip-phone simple:"),
+                        " No View Details button. No modal. No chart. Only: action + 1 sentence why + Done."),
+                    React.createElement("button", { onClick: () => setShowHelp(false), className: "tap w-full rounded-full bg-black text-white text-[20px] font-extrabold min-h-[60px]" }, "Got it \u2014 start using \u2713")))))));
+}
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<App />);
+root.render(React.createElement(App, null));
 </script>
 </body>
 </html>
