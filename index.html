@@ -530,462 +530,220 @@ function App() {
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(React.createElement(App, null));
-<!-- UNIVERSAL APP DATA PORTABILITY v2 -->
+<!-- UNIVERSAL LOCAL DATA BACKUP
+     Zero-interference version
+     Paste immediately before </body>
+-->
 <script>
-(() => {
+(function () {
+  "use strict";
 
-  const FORMAT = "UNIVERSAL_WEB_APP_DATA";
-  const VERSION = 2;
+  const FORMAT = "UNIVERSAL_LOCAL_BACKUP";
+  const VERSION = 1;
 
-  /* =========================================
-     APP STATE REGISTRATION
-     Optional:
-     Your app can expose extra hidden state with:
+  /* ==============================
+     CREATE BACKUP
+  ============================== */
 
-     UniversalData.register("myApp", {
-       get: () => myAppState,
-       set: data => { myAppState = data; }
-     });
-  ========================================= */
+  function exportData() {
+    try {
+      const data = {};
 
-  const adapters = {};
+      // Copy localStorage without modifying it
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
 
-  window.UniversalData = {
-
-    register(name, adapter) {
-      if (
-        adapter &&
-        typeof adapter.get === "function"
-      ) {
-        adapters[name] = adapter;
+        if (key !== null) {
+          data[key] = localStorage.getItem(key);
+        }
       }
+
+      const backup = {
+        format: FORMAT,
+        version: VERSION,
+        app: document.title || "Web App",
+        exportedAt: new Date().toISOString(),
+        localStorage: data
+      };
+
+      const blob = new Blob(
+        [JSON.stringify(backup, null, 2)],
+        {
+          type: "application/json"
+        }
+      );
+
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "app-backup.json";
+
+      link.click();
+
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+      }, 1000);
+
+    } catch (error) {
+      console.error("Backup failed:", error);
+      alert("Could not export app data.");
+    }
+  }
+
+
+  /* ==============================
+     RESTORE BACKUP
+  ============================== */
+
+  function importData(file) {
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function () {
+
+      try {
+
+        const backup =
+          JSON.parse(reader.result);
+
+        if (
+          !backup ||
+          backup.format !== FORMAT ||
+          !backup.localStorage
+        ) {
+          throw new Error(
+            "Not a compatible backup."
+          );
+        }
+
+        const confirmed = confirm(
+          "Restore this backup?\n\n" +
+          "Existing data with matching keys " +
+          "will be replaced."
+        );
+
+        if (!confirmed) return;
+
+        Object.keys(
+          backup.localStorage
+        ).forEach(key => {
+
+          localStorage.setItem(
+            key,
+            backup.localStorage[key]
+          );
+
+        });
+
+        alert(
+          "Backup restored.\n\n" +
+          "The app will now reload."
+        );
+
+        location.reload();
+
+      } catch (error) {
+
+        console.error(
+          "Restore failed:",
+          error
+        );
+
+        alert(
+          "Could not restore this backup."
+        );
+      }
+    };
+
+    reader.readAsText(file);
+  }
+
+
+  /* ==============================
+     HIDDEN FILE INPUT
+  ============================== */
+
+  const fileInput =
+    document.createElement("input");
+
+  fileInput.type = "file";
+  fileInput.accept = ".json";
+  fileInput.style.display = "none";
+
+  document.body.appendChild(
+    fileInput
+  );
+
+  fileInput.addEventListener(
+    "change",
+    function () {
+
+      if (fileInput.files.length) {
+        importData(
+          fileInput.files[0]
+        );
+      }
+
+      fileInput.value = "";
+
+    }
+  );
+
+
+  /* ==============================
+     PUBLIC API
+  ============================== */
+
+  window.UniversalBackup = {
+
+    export: exportData,
+
+    import: function () {
+      fileInput.click();
     }
 
   };
 
 
-  /* =========================================
-     LOCAL STORAGE
-  ========================================= */
+  /* ==============================
+     OPTIONAL KEYBOARD ACCESS
+  ============================== */
 
-  function collectLocalStorage() {
+  document.addEventListener(
+    "keydown",
+    function (event) {
 
-    const result = {};
+      // Ctrl/Cmd + Shift + E
+      if (
+        (event.ctrlKey ||
+         event.metaKey) &&
+        event.shiftKey &&
+        event.key.toLowerCase() === "e"
+      ) {
 
-    for (let i = 0; i < localStorage.length; i++) {
+        event.preventDefault();
 
-      const key = localStorage.key(i);
+        exportData();
+      }
 
-      result[key] = localStorage.getItem(key);
-    }
+      // Ctrl/Cmd + Shift + I
+      if (
+        (event.ctrlKey ||
+         event.metaKey) &&
+        event.shiftKey &&
+        event.key.toLowerCase() === "i"
+      ) {
 
-    return result;
-  }
+        event.preventDefault();
 
-
-  /* =========================================
-     SESSION STORAGE
-  ========================================= */
-
-  function collectSessionStorage() {
-
-    const result = {};
-
-    for (let i = 0; i < sessionStorage.length; i++) {
-
-      const key = sessionStorage.key(i);
-
-      result[key] = sessionStorage.getItem(key);
-    }
-
-    return result;
-  }
-
-
-  /* =========================================
-     REGISTERED APP STATE
-  ========================================= */
-
-  function collectAppState() {
-
-    const result = {};
-
-    for (const name in adapters) {
-
-      try {
-
-        result[name] = adapters[name].get();
-
-      } catch (error) {
-
-        console.warn(
-          "Could not export:",
-          name,
-          error
-        );
-
+        fileInput.click();
       }
 
     }
-
-    return result;
-  }
-
-
-  /* =========================================
-     CREATE COMPLETE SAVE
-  ========================================= */
-
-  function collectEverything() {
-
-    return {
-
-      format: FORMAT,
-
-      version: VERSION,
-
-      exportedAt:
-        new Date().toISOString(),
-
-      app: {
-
-        name:
-          document.title ||
-          "Web App",
-
-        url:
-          location.href
-
-      },
-
-      localStorage:
-        collectLocalStorage(),
-
-      sessionStorage:
-        collectSessionStorage(),
-
-      appState:
-        collectAppState()
-
-    };
-  }
-
-
-  /* =========================================
-     EXPORT
-  ========================================= */
-
-  function exportData() {
-
-    const save =
-      collectEverything();
-
-    const blob = new Blob(
-
-      [
-        JSON.stringify(
-          save,
-          null,
-          2
-        )
-      ],
-
-      {
-        type:
-          "application/json"
-      }
-
-    );
-
-    const url =
-      URL.createObjectURL(blob);
-
-    const link =
-      document.createElement("a");
-
-    const safeName =
-      (document.title || "web-app")
-        .replace(/[^a-z0-9]/gi, "-")
-        .toLowerCase();
-
-    link.href = url;
-
-    link.download =
-      `${safeName}-save.json`;
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    link.remove();
-
-    URL.revokeObjectURL(url);
-
-  }
-
-
-  /* =========================================
-     IMPORT
-  ========================================= */
-
-  function importData(file) {
-
-    if (!file) return;
-
-    const reader =
-      new FileReader();
-
-    reader.onload = () => {
-
-      try {
-
-        const save =
-          JSON.parse(
-            reader.result
-          );
-
-        if (
-          save.format !== FORMAT
-        ) {
-
-          throw new Error(
-            "This is not a compatible save file."
-          );
-
-        }
-
-
-        /* Restore localStorage */
-
-        if (save.localStorage) {
-
-          Object.entries(
-            save.localStorage
-          ).forEach(
-            ([key, value]) => {
-
-              localStorage.setItem(
-                key,
-                value
-              );
-
-            }
-          );
-
-        }
-
-
-        /* Restore sessionStorage */
-
-        if (save.sessionStorage) {
-
-          Object.entries(
-            save.sessionStorage
-          ).forEach(
-            ([key, value]) => {
-
-              sessionStorage.setItem(
-                key,
-                value
-              );
-
-            }
-          );
-
-        }
-
-
-        /* Restore registered app state */
-
-        if (save.appState) {
-
-          for (
-            const name in save.appState
-          ) {
-
-            if (
-              adapters[name] &&
-              typeof adapters[name].set ===
-                "function"
-            ) {
-
-              try {
-
-                adapters[name].set(
-                  save.appState[name]
-                );
-
-              } catch (error) {
-
-                console.warn(
-                  "Could not restore:",
-                  name,
-                  error
-                );
-
-              }
-
-            }
-
-          }
-
-        }
-
-
-        alert(
-          "App data imported successfully."
-        );
-
-        location.reload();
-
-      }
-
-      catch (error) {
-
-        alert(
-          "Import failed:\n" +
-          error.message
-        );
-
-      }
-
-    };
-
-
-    reader.readAsText(file);
-
-  }
-
-
-  /* =========================================
-     UI
-  ========================================= */
-
-  const panel =
-    document.createElement("div");
-
-  panel.innerHTML = `
-
-    <div style="
-      position:fixed;
-      bottom:20px;
-      right:20px;
-      z-index:999999;
-
-      display:flex;
-      gap:8px;
-
-      padding:10px;
-
-      border-radius:12px;
-
-      background:rgba(0,0,0,.88);
-
-      box-shadow:
-        0 4px 20px rgba(0,0,0,.3);
-
-      font-family:
-        system-ui,
-        -apple-system,
-        sans-serif;
-    ">
-
-      <button
-        id="universalExport"
-        style="
-          padding:10px 14px;
-          border:0;
-          border-radius:8px;
-          cursor:pointer;
-        "
-      >
-        Export Data
-      </button>
-
-      <button
-        id="universalImport"
-        style="
-          padding:10px 14px;
-          border:0;
-          border-radius:8px;
-          cursor:pointer;
-        "
-      >
-        Import Data
-      </button>
-
-      <input
-        id="universalFileInput"
-        type="file"
-        accept=".json"
-        style="display:none"
-      >
-
-    </div>
-
-  `;
-
-
-  function initialize() {
-
-    document.body.appendChild(
-      panel
-    );
-
-    document
-      .getElementById(
-        "universalExport"
-      )
-      .onclick =
-        exportData;
-
-
-    const input =
-      document.getElementById(
-        "universalFileInput"
-      );
-
-
-    document
-      .getElementById(
-        "universalImport"
-      )
-      .onclick = () => {
-
-        input.click();
-
-      };
-
-
-    input.onchange =
-      event => {
-
-        importData(
-          event.target.files[0]
-        );
-
-        event.target.value = "";
-
-      };
-
-  }
-
-
-  if (
-    document.readyState ===
-    "loading"
-  ) {
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      initialize
-    );
-
-  } else {
-
-    initialize();
-
-  }
+  );
 
 })();
 </script>
