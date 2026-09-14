@@ -530,6 +530,186 @@ function App() {
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(React.createElement(App, null));
+<!-- UNIVERSAL LOCAL DATA PORTABILITY -->
+<div id="universal-data-tools" style="
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:999999;
+  display:flex;
+  gap:8px;
+  font-family:system-ui,sans-serif;
+">
+  <button onclick="UniversalData.export()" style="
+    padding:10px 14px;
+    border:none;
+    border-radius:10px;
+    background:#111;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow:0 3px 12px rgba(0,0,0,.25);
+  ">
+    👆 Export
+  </button>
+
+  <button onclick="UniversalData.import()" style="
+    padding:10px 14px;
+    border:none;
+    border-radius:10px;
+    background:#111;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow:0 3px 12px rgba(0,0,0,.25);
+  ">
+    👆 Import
+  </button>
+</div>
+
+<script>
+(() => {
+
+  const FORMAT = "UNIVERSAL_WEB_APP_DATA";
+  const VERSION = 1;
+
+  function collectData() {
+
+    const data = {};
+
+    for (let i = 0; i < localStorage.length; i++) {
+
+      const key = localStorage.key(i);
+
+      if (key !== null) {
+        data[key] = localStorage.getItem(key);
+      }
+
+    }
+
+    return {
+      format: FORMAT,
+      version: VERSION,
+      exportedAt: new Date().toISOString(),
+      data: data
+    };
+  }
+
+  function exportData() {
+
+    const packageData = collectData();
+
+    const blob = new Blob(
+      [JSON.stringify(packageData, null, 2)],
+      { type: "application/json" }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+      `${document.title || "web-app"}-data.json`;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+    }, 1000);
+
+  }
+
+  function importData(file) {
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+
+      try {
+
+        const packageData =
+          JSON.parse(reader.result);
+
+        if (
+          packageData.format !== FORMAT ||
+          !packageData.data
+        ) {
+          throw new Error("Invalid app data file.");
+        }
+
+        const confirmed = confirm(
+          "Restore this app data?\n\n" +
+          "Existing matching data will be replaced."
+        );
+
+        if (!confirmed) return;
+
+        Object.keys(packageData.data).forEach(key => {
+
+          localStorage.setItem(
+            key,
+            packageData.data[key]
+          );
+
+        });
+
+        alert("Data restored successfully.");
+
+        location.reload();
+
+      } catch (error) {
+
+        alert(
+          "Import failed: " +
+          error.message
+        );
+
+      }
+
+    };
+
+    reader.readAsText(file);
+  }
+
+  const fileInput =
+    document.createElement("input");
+
+  fileInput.type = "file";
+  fileInput.accept = ".json";
+  fileInput.style.display = "none";
+
+  document.body.appendChild(fileInput);
+
+  fileInput.addEventListener("change", () => {
+
+    if (fileInput.files[0]) {
+      importData(fileInput.files[0]);
+    }
+
+    fileInput.value = "";
+
+  });
+
+  window.UniversalData = {
+
+    export: exportData,
+
+    import: () => {
+      fileInput.click();
+    }
+
+  };
+
+})();
+</script>
 </script>
 </body>
 </html>
