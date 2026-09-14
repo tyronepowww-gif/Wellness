@@ -530,123 +530,387 @@ function App() {
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(React.createElement(App, null));
-<!-- UNIVERSAL LOCAL DATA PORTABILITY -->
+<!-- UNIVERSAL APP DATA PORTABILITY v2 -->
 <script>
 (() => {
-  const APP_KEY = "UniversalWebAppData";
 
-  // Collect the app's localStorage data
-  function collectData() {
-    const data = {};
+  const FORMAT = "UNIVERSAL_WEB_APP_DATA";
+  const VERSION = 2;
 
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      data[key] = localStorage.getItem(key);
+  /* =========================================
+     APP STATE REGISTRATION
+     Optional:
+     Your app can expose extra hidden state with:
+
+     UniversalData.register("myApp", {
+       get: () => myAppState,
+       set: data => { myAppState = data; }
+     });
+  ========================================= */
+
+  const adapters = {};
+
+  window.UniversalData = {
+
+    register(name, adapter) {
+      if (
+        adapter &&
+        typeof adapter.get === "function"
+      ) {
+        adapters[name] = adapter;
+      }
     }
 
+  };
+
+
+  /* =========================================
+     LOCAL STORAGE
+  ========================================= */
+
+  function collectLocalStorage() {
+
+    const result = {};
+
+    for (let i = 0; i < localStorage.length; i++) {
+
+      const key = localStorage.key(i);
+
+      result[key] = localStorage.getItem(key);
+    }
+
+    return result;
+  }
+
+
+  /* =========================================
+     SESSION STORAGE
+  ========================================= */
+
+  function collectSessionStorage() {
+
+    const result = {};
+
+    for (let i = 0; i < sessionStorage.length; i++) {
+
+      const key = sessionStorage.key(i);
+
+      result[key] = sessionStorage.getItem(key);
+    }
+
+    return result;
+  }
+
+
+  /* =========================================
+     REGISTERED APP STATE
+  ========================================= */
+
+  function collectAppState() {
+
+    const result = {};
+
+    for (const name in adapters) {
+
+      try {
+
+        result[name] = adapters[name].get();
+
+      } catch (error) {
+
+        console.warn(
+          "Could not export:",
+          name,
+          error
+        );
+
+      }
+
+    }
+
+    return result;
+  }
+
+
+  /* =========================================
+     CREATE COMPLETE SAVE
+  ========================================= */
+
+  function collectEverything() {
+
     return {
-      format: "UNIVERSAL_WEB_APP_DATA",
-      version: 1,
-      exportedAt: new Date().toISOString(),
-      data
+
+      format: FORMAT,
+
+      version: VERSION,
+
+      exportedAt:
+        new Date().toISOString(),
+
+      app: {
+
+        name:
+          document.title ||
+          "Web App",
+
+        url:
+          location.href
+
+      },
+
+      localStorage:
+        collectLocalStorage(),
+
+      sessionStorage:
+        collectSessionStorage(),
+
+      appState:
+        collectAppState()
+
     };
   }
 
-  // Export everything stored by this website
+
+  /* =========================================
+     EXPORT
+  ========================================= */
+
   function exportData() {
-    const packageData = collectData();
+
+    const save =
+      collectEverything();
 
     const blob = new Blob(
-      [JSON.stringify(packageData, null, 2)],
-      { type: "application/json" }
+
+      [
+        JSON.stringify(
+          save,
+          null,
+          2
+        )
+      ],
+
+      {
+        type:
+          "application/json"
+      }
+
     );
 
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
+    const url =
+      URL.createObjectURL(blob);
+
+    const link =
+      document.createElement("a");
+
+    const safeName =
+      (document.title || "web-app")
+        .replace(/[^a-z0-9]/gi, "-")
+        .toLowerCase();
 
     link.href = url;
+
     link.download =
-      `${document.title || "web-app"}-data.json`;
+      `${safeName}-save.json`;
 
     document.body.appendChild(link);
+
     link.click();
+
     link.remove();
 
     URL.revokeObjectURL(url);
+
   }
 
-  // Import a previous save
+
+  /* =========================================
+     IMPORT
+  ========================================= */
+
   function importData(file) {
+
     if (!file) return;
 
-    const reader = new FileReader();
+    const reader =
+      new FileReader();
 
     reader.onload = () => {
+
       try {
-        const packageData = JSON.parse(reader.result);
+
+        const save =
+          JSON.parse(
+            reader.result
+          );
 
         if (
-          packageData.format !==
-          "UNIVERSAL_WEB_APP_DATA"
+          save.format !== FORMAT
         ) {
-          throw new Error("Invalid app data file.");
+
+          throw new Error(
+            "This is not a compatible save file."
+          );
+
         }
 
-        const data = packageData.data;
 
-        // Restore data
-        Object.keys(data).forEach(key => {
-          localStorage.setItem(key, data[key]);
-        });
+        /* Restore localStorage */
 
-        alert("Data imported successfully.");
+        if (save.localStorage) {
 
-        // Reload so the app picks up the restored data
+          Object.entries(
+            save.localStorage
+          ).forEach(
+            ([key, value]) => {
+
+              localStorage.setItem(
+                key,
+                value
+              );
+
+            }
+          );
+
+        }
+
+
+        /* Restore sessionStorage */
+
+        if (save.sessionStorage) {
+
+          Object.entries(
+            save.sessionStorage
+          ).forEach(
+            ([key, value]) => {
+
+              sessionStorage.setItem(
+                key,
+                value
+              );
+
+            }
+          );
+
+        }
+
+
+        /* Restore registered app state */
+
+        if (save.appState) {
+
+          for (
+            const name in save.appState
+          ) {
+
+            if (
+              adapters[name] &&
+              typeof adapters[name].set ===
+                "function"
+            ) {
+
+              try {
+
+                adapters[name].set(
+                  save.appState[name]
+                );
+
+              } catch (error) {
+
+                console.warn(
+                  "Could not restore:",
+                  name,
+                  error
+                );
+
+              }
+
+            }
+
+          }
+
+        }
+
+
+        alert(
+          "App data imported successfully."
+        );
+
         location.reload();
 
-      } catch (error) {
-        alert(
-          "Import failed: " + error.message
-        );
       }
+
+      catch (error) {
+
+        alert(
+          "Import failed:\n" +
+          error.message
+        );
+
+      }
+
     };
 
+
     reader.readAsText(file);
+
   }
 
-  // Create the UI
-  const panel = document.createElement("div");
+
+  /* =========================================
+     UI
+  ========================================= */
+
+  const panel =
+    document.createElement("div");
 
   panel.innerHTML = `
+
     <div style="
       position:fixed;
       bottom:20px;
       right:20px;
       z-index:999999;
+
       display:flex;
       gap:8px;
+
       padding:10px;
+
       border-radius:12px;
-      background:rgba(0,0,0,.85);
-      box-shadow:0 4px 20px rgba(0,0,0,.3);
-      font-family:system-ui,sans-serif;
+
+      background:rgba(0,0,0,.88);
+
+      box-shadow:
+        0 4px 20px rgba(0,0,0,.3);
+
+      font-family:
+        system-ui,
+        -apple-system,
+        sans-serif;
     ">
 
-      <button id="universalExport" style="
-        padding:10px 14px;
-        border:0;
-        border-radius:8px;
-        cursor:pointer;
-      ">
+      <button
+        id="universalExport"
+        style="
+          padding:10px 14px;
+          border:0;
+          border-radius:8px;
+          cursor:pointer;
+        "
+      >
         Export Data
       </button>
 
-      <button id="universalImport" style="
-        padding:10px 14px;
-        border:0;
-        border-radius:8px;
-        cursor:pointer;
-      ">
+      <button
+        id="universalImport"
+        style="
+          padding:10px 14px;
+          border:0;
+          border-radius:8px;
+          cursor:pointer;
+        "
+      >
         Import Data
       </button>
 
@@ -658,29 +922,70 @@ root.render(React.createElement(App, null));
       >
 
     </div>
+
   `;
 
-  document.body.appendChild(panel);
 
-  // Export
-  document
-    .getElementById("universalExport")
-    .addEventListener("click", exportData);
+  function initialize() {
 
-  // Import
-  const fileInput =
-    document.getElementById("universalFileInput");
+    document.body.appendChild(
+      panel
+    );
 
-  document
-    .getElementById("universalImport")
-    .addEventListener("click", () => {
-      fileInput.click();
-    });
+    document
+      .getElementById(
+        "universalExport"
+      )
+      .onclick =
+        exportData;
 
-  fileInput.addEventListener("change", event => {
-    importData(event.target.files[0]);
-    event.target.value = "";
-  });
+
+    const input =
+      document.getElementById(
+        "universalFileInput"
+      );
+
+
+    document
+      .getElementById(
+        "universalImport"
+      )
+      .onclick = () => {
+
+        input.click();
+
+      };
+
+
+    input.onchange =
+      event => {
+
+        importData(
+          event.target.files[0]
+        );
+
+        event.target.value = "";
+
+      };
+
+  }
+
+
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      initialize
+    );
+
+  } else {
+
+    initialize();
+
+  }
 
 })();
 </script>
