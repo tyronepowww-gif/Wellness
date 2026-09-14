@@ -531,61 +531,21 @@ function App() {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(React.createElement(App, null));
 </script>
-<!-- UNIVERSAL LOCAL DATA PORTABILITY -->
-<div id="universal-data-tools" style="
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  z-index:999999;
-  display:flex;
-  gap:8px;
-  font-family:system-ui,sans-serif;
-">
-  <button onclick="UniversalData.export()" style="
-    padding:10px 14px;
-    border:none;
-    border-radius:10px;
-    background:#111;
-    color:white;
-    font-weight:600;
-    cursor:pointer;
-    box-shadow:0 3px 12px rgba(0,0,0,.25);
-  ">
-    👆 Export
-  </button>
-
-  <button onclick="UniversalData.import()" style="
-    padding:10px 14px;
-    border:none;
-    border-radius:10px;
-    background:#111;
-    color:white;
-    font-weight:600;
-    cursor:pointer;
-    box-shadow:0 3px 12px rgba(0,0,0,.25);
-  ">
-    👆 Import
-  </button>
-</div>
-
+<!-- UNIVERSAL LOCAL DATA PORTABILITY — SMALL EXPANDER -->
 <script>
 (() => {
-
   const FORMAT = "UNIVERSAL_WEB_APP_DATA";
   const VERSION = 1;
 
   function collectData() {
-
     const data = {};
 
     for (let i = 0; i < localStorage.length; i++) {
-
       const key = localStorage.key(i);
 
       if (key !== null) {
         data[key] = localStorage.getItem(key);
       }
-
     }
 
     return {
@@ -597,7 +557,6 @@ root.render(React.createElement(App, null));
   }
 
   function exportData() {
-
     const packageData = collectData();
 
     const blob = new Blob(
@@ -606,38 +565,29 @@ root.render(React.createElement(App, null));
     );
 
     const url = URL.createObjectURL(blob);
-
     const link = document.createElement("a");
 
     link.href = url;
-
     link.download =
       `${document.title || "web-app"}-data.json`;
 
     document.body.appendChild(link);
-
     link.click();
-
     link.remove();
 
     setTimeout(() => {
       URL.revokeObjectURL(url);
     }, 1000);
-
   }
 
   function importData(file) {
-
     if (!file) return;
 
     const reader = new FileReader();
 
     reader.onload = () => {
-
       try {
-
-        const packageData =
-          JSON.parse(reader.result);
+        const packageData = JSON.parse(reader.result);
 
         if (
           packageData.format !== FORMAT ||
@@ -654,34 +604,25 @@ root.render(React.createElement(App, null));
         if (!confirmed) return;
 
         Object.keys(packageData.data).forEach(key => {
-
           localStorage.setItem(
             key,
             packageData.data[key]
           );
-
         });
 
         alert("Data restored successfully.");
-
         location.reload();
 
       } catch (error) {
-
-        alert(
-          "Import failed: " +
-          error.message
-        );
-
+        alert("Import failed: " + error.message);
       }
-
     };
 
     reader.readAsText(file);
   }
 
-  const fileInput =
-    document.createElement("input");
+  /* Hidden file picker */
+  const fileInput = document.createElement("input");
 
   fileInput.type = "file";
   fileInput.accept = ".json";
@@ -690,23 +631,94 @@ root.render(React.createElement(App, null));
   document.body.appendChild(fileInput);
 
   fileInput.addEventListener("change", () => {
-
     if (fileInput.files[0]) {
       importData(fileInput.files[0]);
     }
 
     fileInput.value = "";
-
   });
 
+  /* Small expandable control */
+  const wrapper = document.createElement("div");
+
+  wrapper.style.cssText = `
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    z-index: 2147483647;
+    font-family: sans-serif;
+  `;
+
+  const toggle = document.createElement("button");
+
+  toggle.textContent = "▸";
+
+  toggle.style.cssText = `
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.65);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+  `;
+
+  const menu = document.createElement("div");
+
+  menu.style.cssText = `
+    display: none;
+    position: absolute;
+    right: 0;
+    bottom: 34px;
+    background: rgba(0,0,0,0.85);
+    border-radius: 8px;
+    padding: 5px;
+    gap: 5px;
+    white-space: nowrap;
+  `;
+
+  const exportButton = document.createElement("button");
+  exportButton.textContent = "Export";
+
+  const importButton = document.createElement("button");
+  importButton.textContent = "Import";
+
+  [exportButton, importButton].forEach(button => {
+    button.style.cssText = `
+      border: none;
+      border-radius: 5px;
+      padding: 6px 9px;
+      background: white;
+      color: black;
+      font-size: 12px;
+      cursor: pointer;
+    `;
+  });
+
+  exportButton.onclick = exportData;
+  importButton.onclick = () => fileInput.click();
+
+  menu.appendChild(exportButton);
+  menu.appendChild(importButton);
+
+  toggle.onclick = () => {
+    const open = menu.style.display === "flex";
+
+    menu.style.display = open ? "none" : "flex";
+    toggle.textContent = open ? "▸" : "◂";
+  };
+
+  wrapper.appendChild(menu);
+  wrapper.appendChild(toggle);
+
+  document.body.appendChild(wrapper);
+
+  /* Public API */
   window.UniversalData = {
-
     export: exportData,
-
-    import: () => {
-      fileInput.click();
-    }
-
+    import: () => fileInput.click()
   };
 
 })();
