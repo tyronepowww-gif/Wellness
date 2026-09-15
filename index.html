@@ -32,8 +32,8 @@ function toggle(id){let t=state.tasks.find(x=>x.id===id);if(!t)return;t.done=!t.
 function openShift(){let d=document.createElement('div');d.id='shiftPick';d.innerHTML=shiftPicker();document.body.append(d);d.querySelectorAll('[data-a]').forEach(e=>e.onclick=()=>{if(e.dataset.a==='close-shift'){d.remove();return}if(e.dataset.a==='quick-start'){$('#starttime',d).value=e.dataset.v;return}if(e.dataset.a==='save-shift'){let datev=$('#workdate',d).value,st=$('#starttime',d).value,en=$('#endtime',d).value;if(!datev||!st||!en){toast('Set date, start, and end time.');return}let start=new Date(`${datev}T${st}`),end=new Date(`${datev}T${en}`);if(end<=start)end.setDate(end.getDate()+1);let sh=nextShift()||state.shifts[0];Object.assign(sh,{start:ldt(start),end:ldt(end),location:$('#location',d).value.trim()||'Work location'});save();d.remove();render();toast('Work time saved')}})}
 render();
 })();
-// Firebase init here
 new App();
+// Firebase init here
 const firebaseConfig = {
   apiKey: "...",
   authDomain: "...",
