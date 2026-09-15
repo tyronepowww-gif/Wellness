@@ -1,535 +1,145 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<title>WorkWell</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&family=Fraunces:opsz,wght@9..144,700&display=swap" />
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>WorkWell</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#111;--paper:#fff;--muted:#f1f1ed;--line:#161616;--green:#16a34a;--green-dark:#087a34;--amber:#fbbf24;--red:#c62929;}
+    *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font:600 16px/1.45 Inter,system-ui,sans-serif}.app{max-width:720px;margin:0 auto;padding:0 18px 112px}.top{position:sticky;top:0;z-index:10;background:#fff;border-bottom:3px solid var(--line);margin:0 -18px;padding:18px 18px 14px}.brand{font:700 30px/1 Fraunces,serif;letter-spacing:-.04em}.sub{margin-top:6px;font-size:13px;color:#555}.toprow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.iconbtn{width:48px;height:48px;border:3px solid var(--line);border-radius:50%;background:#fff;font-size:22px;font-weight:800;cursor:pointer}.screen{padding-top:22px}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;color:#555}.card{border:3px solid var(--line);border-radius:25px;padding:20px;background:#fff;margin:0 0 18px}.card.dark{background:#111;color:#fff}.next{border:3px solid var(--line);border-radius:28px;padding:22px;background:var(--green);color:#fff;box-shadow:7px 7px 0 #111}.next .eyebrow{color:#e5ffe9}.title{font:700 29px/1.05 Fraunces,serif;letter-spacing:-.035em;margin:7px 0}.tasktitle{font:800 26px/1.15 Inter,sans-serif;margin:14px 0 4px}.small{font-size:14px;color:#555}.dark .small{color:#e4e4e4}.reason{border-top:2px solid rgba(255,255,255,.55);margin-top:16px;padding-top:14px;font-size:15px;line-height:1.5}.button{min-height:56px;border:3px solid var(--line);border-radius:999px;padding:10px 18px;background:#fff;color:#111;font:800 16px Inter,sans-serif;cursor:pointer}.button.primary{width:100%;background:#111;color:#fff;border-color:#111;margin-top:18px}.button.green{background:var(--green);color:#fff;border-color:#111}.button.subtle{background:#f2f2ef}.button.danger{background:#fff;color:var(--red);border-color:var(--red)}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:18px 0 0}.metric{border:2px solid var(--line);border-radius:16px;padding:10px 9px;background:#fff;color:#111}.metric b{display:block;font-size:18px;line-height:1.1}.metric span{display:block;font-size:11px;margin-top:4px;color:#555}.status{margin:16px 0 0;padding:12px 14px;border:2px solid var(--line);border-radius:15px;background:#f3f3ef;font-size:14px;cursor:pointer}.timeline{display:grid;gap:8px;margin-top:15px}.time-row{display:grid;grid-template-columns:96px 1fr;gap:12px;font-size:15px}.time-row b{font-variant-numeric:tabular-nums}.summary{display:grid;grid-template-columns:1fr auto;gap:8px;padding:7px 0;border-bottom:1px solid #ccc;font-size:15px}.summary:last-child{border-bottom:0}.summary.total{font-weight:800;border-top:3px solid #111;border-bottom:0;margin-top:6px;padding-top:10px}.group{margin:20px 0}.grouphead{display:flex;justify-content:space-between;align-items:center;font-size:12px;letter-spacing:.14em;font-weight:800;margin-bottom:8px}.task{display:grid;grid-template-columns:42px 1fr auto 32px;align-items:center;gap:9px;border:2px solid var(--line);border-radius:16px;padding:8px 9px;margin:8px 0}.task.done{opacity:.52}.check{height:34px;width:34px;border:2px solid var(--line);border-radius:50%;background:#fff;font-weight:800;cursor:pointer}.task.done .check{background:var(--green);color:#fff}.taskname{font-weight:800;line-height:1.2}.taskmeta{font-size:12px;color:#555;margin-top:3px}.tasktime{font-size:13px;font-weight:800}.delete{border:0;background:transparent;font-size:23px;cursor:pointer;color:#555}.addbox{border:3px dashed var(--line);border-radius:20px;padding:14px;margin-top:18px}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.input,.select{min-height:48px;border:2px solid var(--line);border-radius:13px;padding:8px 11px;font:700 15px Inter,sans-serif;background:#fff;min-width:0}.input.flex{flex:1}.addbox .select{flex:0 0 120px}.settings-section{padding:16px 0;border-bottom:2px solid #ddd}.settings-section:last-child{border:0}.settings-section h3{font-size:17px;margin:0 0 10px}.choices{display:flex;gap:8px;flex-wrap:wrap}.choice{min-height:45px;border:2px solid var(--line);border-radius:999px;padding:8px 14px;background:#fff;font:800 14px Inter,sans-serif;cursor:pointer}.choice.selected{background:#111;color:#fff}.choice.selected.green{background:var(--green);border-color:var(--green)}.recoverybox{border:3px solid var(--line);border-radius:22px;padding:18px;background:#effaf1;margin-top:18px}.modalback{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:40;display:flex;align-items:flex-end}.modal{width:min(720px,100%);margin:0 auto;background:#fff;border:3px solid var(--line);border-bottom:0;border-radius:28px 28px 0 0;padding:22px 18px 34px;max-height:90vh;overflow:auto}.modalhead{display:flex;justify-content:space-between;gap:12px;align-items:start}.modal h2{font:700 28px/1 Fraunces,serif;margin:0}.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:3px solid var(--line);z-index:20}.tabs{max-width:720px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr)}.tab{min-height:78px;border:0;border-right:2px solid var(--line);background:#fff;font:800 14px Inter,sans-serif;letter-spacing:.06em;cursor:pointer}.tab:last-child{border-right:0}.tab.active{background:#111;color:#fff}.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);z-index:60;background:#111;color:#fff;border-radius:999px;padding:11px 17px;font-size:14px;font-weight:800;max-width:90%;text-align:center}.notice{border-left:5px solid var(--amber);padding:10px 12px;background:#fff8dc;font-size:14px;margin-top:12px}.hidden{display:none}@media(max-width:470px){.metrics{grid-template-columns:1fr}.task{grid-template-columns:38px 1fr auto 28px}.tasktitle{font-size:23px}.brand{font-size:28px}.time-row{grid-template-columns:84px 1fr}.addbox .select{flex:1}.input.flex{flex-basis:100%}}
+  </style>
 </head>
 <body>
 <div id="root"></div>
 <script>
-"use strict";
-const { useEffect, useMemo, useRef, useState } = React;
-function Icon({ children, className }) {
-    return (React.createElement("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: className }, children));
-}
-const Moon = (p) => React.createElement(Icon, { ...p },
-    React.createElement("path", { d: "M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11Z" }));
-const Clock3 = (p) => React.createElement(Icon, { ...p },
-    React.createElement("circle", { cx: "12", cy: "12", r: "9" }),
-    React.createElement("path", { d: "M12 7v5l3.5 2" }));
-const UtensilsCrossed = (p) => React.createElement(Icon, { ...p },
-    React.createElement("path", { d: "M6 3v7a2 2 0 0 0 2 2v9M6 3v7M10 3v7M6 10h4M17 3l-5 9m5-9 3 18m-3-18-3 18" }));
-const Settings2 = (p) => React.createElement(Icon, { ...p },
-    React.createElement("circle", { cx: "12", cy: "12", r: "3" }),
-    React.createElement("path", { d: "M12 3v3M12 18v3M4.2 6.2l2.1 2.1M17.7 15.7l2.1 2.1M3 12h3M18 12h3M4.2 17.8l2.1-2.1M17.7 8.3l2.1-2.1" }));
-const Volume2 = (p) => React.createElement(Icon, { ...p },
-    React.createElement("path", { d: "M5 9v6h4l5 4V5L9 9H5Z" }),
-    React.createElement("path", { d: "M18 9a4 4 0 0 1 0 6M20.5 6.5a8 8 0 0 1 0 11" }));
-const SunMedium = (p) => React.createElement(Icon, { ...p },
-    React.createElement("circle", { cx: "12", cy: "12", r: "4" }),
-    React.createElement("path", { d: "M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" }));
-const X = (p) => React.createElement(Icon, { ...p },
-    React.createElement("path", { d: "M6 6l12 12M18 6 6 18" }));
-const HelpCircle = (p) => React.createElement(Icon, { ...p },
-    React.createElement("circle", { cx: "12", cy: "12", r: "9" }),
-    React.createElement("path", { d: "M9.5 9.5a2.5 2.5 0 0 1 4.9.8c0 1.7-2.4 1.7-2.4 3.5" }),
-    React.createElement("path", { d: "M12 17h.01" }));
-const ChevronDown = (p) => React.createElement(Icon, { ...p },
-    React.createElement("path", { d: "M6 9l6 6 6-6" }));
-const ChevronUp = (p) => React.createElement(Icon, { ...p },
-    React.createElement("path", { d: "M6 15l6-6 6 6" }));
-const EllipsisVertical = (p) => React.createElement(Icon, { ...p },
-    React.createElement("circle", { cx: "12", cy: "5", r: "1.2", fill: "currentColor" }),
-    React.createElement("circle", { cx: "12", cy: "12", r: "1.2", fill: "currentColor" }),
-    React.createElement("circle", { cx: "12", cy: "19", r: "1.2", fill: "currentColor" }));
-const Clock = (p) => React.createElement(Icon, { ...p },
-    React.createElement("circle", { cx: "12", cy: "12", r: "9" }),
-    React.createElement("path", { d: "M12 7v5l3 2" }));
-const Sunrise = (p) => React.createElement(Icon, { ...p },
-    React.createElement("path", { d: "M12 3v5M5.6 9.6l1.4 1.4M18.4 9.6l-1.4 1.4M2 15h20M5 15a7 7 0 0 1 14 0" }));
-const Pin = (p) => React.createElement(Icon, { ...p },
-    React.createElement("path", { d: "M12 2v6l4 3-1 4h-3v7l-2-3v-4H7l-1-4 4-3V2Z" }));
-const PinOff = (p) => React.createElement(Icon, { ...p },
-    React.createElement("path", { d: "M12 2v6l4 3-1 4h-3v7l-2-3v-4H7l-1-4 4-3V2Z" }),
-    React.createElement("path", { d: "M3 3l18 18" }));
-function useLocalStorage(key, initial) {
-    const [state, setState] = useState(() => {
-        try {
-            const raw = localStorage.getItem(key);
-            if (raw)
-                return JSON.parse(raw);
-        }
-        catch { }
-        return initial;
-    });
-    useEffect(() => { try {
-        localStorage.setItem(key, JSON.stringify(state));
-    }
-    catch { } }, [key, state]);
-    return [state, setState];
-}
-function defaultShiftStart() {
-    const d = new Date();
-    d.setDate(d.getDate() + 1);
-    d.setHours(6, 30, 0, 0);
-    const pad = (n) => String(n).padStart(2, "0");
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-}
-function defaultShiftEnd() {
-    const d = new Date(defaultShiftStart());
-    d.setHours(d.getHours() + 8);
-    const pad = (n) => String(n).padStart(2, "0");
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-}
-function fmtTime(d) { return d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); }
-function fmtDateLong(d) { return d.toLocaleDateString([], { weekday: "long", month: "short", day: "numeric" }); }
-function fmtDuration(mins) {
-    if (mins < 0)
-        return "0 min";
-    const h = Math.floor(mins / 60);
-    const m = Math.round(mins % 60);
-    if (h === 0)
-        return `${m} min`;
-    if (m === 0)
-        return `${h} hour${h > 1 ? 's' : ''}`;
-    return `${h}h ${m}m`;
-}
-function parseLocalDateTime(s) { const d = new Date(s); return isNaN(d.getTime()) ? new Date(defaultShiftStart()) : d; }
-function speak(text) {
-    try {
-        window.speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(text);
-        u.rate = 0.92;
-        u.pitch = 1;
-        u.volume = 1;
-        window.speechSynthesis.speak(u);
-    }
-    catch { }
-}
-function beepDone() {
-    try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
-        o.type = "sine";
-        o.frequency.value = 880;
-        o.connect(g);
-        g.connect(ctx.destination);
-        g.gain.setValueAtTime(0.0001, ctx.currentTime);
-        g.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.02);
-        o.start();
-        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
-        o.stop(ctx.currentTime + 0.3);
-    }
-    catch { }
-}
-function App() {
-    const [now, setNow] = useState(() => new Date());
-    useEffect(() => { const id = setInterval(() => setNow(new Date()), 60000); return () => clearInterval(id); }, []);
-    const [preferences, setPreferences] = useLocalStorage("preferences_v2", {
-        nextShiftStart: defaultShiftStart(),
-        nextShiftEnd: defaultShiftEnd(),
-        commute: 35,
-        prep: 35,
-        desiredSleep: 7.5,
-        daytimeSleeper: false,
-        trainedToday: true,
-        heavySweat: false,
-        episodeLength: 42,
-    });
-    const [tasks, setTasks] = useLocalStorage("tasks", [
-        { id: "1", title: "Pack work bag", estimate: 10 },
-        { id: "2", title: "Eat dinner", estimate: 30 },
-        { id: "3", title: "Relax and wind down", estimate: 30 },
-    ]);
-    const [meals, setMeals] = useLocalStorage("meals", [
-        { id: "m1", at: new Date().toISOString(), description: "Oats + banana + milk", categories: ["fiber"] },
-    ]);
-    const [activeTab, setActiveTab] = useState("sleep");
-    const [showHelp, setShowHelp] = useState(false);
-    const [toast, setToast] = useState(null);
-    const [expanded, setExpanded] = useState(null);
-    const [nowCollapsed, setNowCollapsed] = useLocalStorage("nowCollapsed", false);
-    const [nowHiddenUntil, setNowHiddenUntil] = useLocalStorage("nowHiddenUntil", null);
-    const [showNowMenu, setShowNowMenu] = useState(false);
-    const [nowPinned, setNowPinned] = useLocalStorage("nowPinned", false);
-    const touchStartY = useRef(null);
-    const pillTouchStartY = useRef(null);
-    const shiftStart = useMemo(() => parseLocalDateTime(preferences.nextShiftStart), [preferences.nextShiftStart]);
-    const shiftEnd = useMemo(() => parseLocalDateTime(preferences.nextShiftEnd), [preferences.nextShiftEnd]);
-    const wakeTarget = useMemo(() => { const d = new Date(shiftStart); d.setMinutes(d.getMinutes() - preferences.commute - preferences.prep); return d; }, [shiftStart, preferences.commute, preferences.prep]);
-    const sleepStart = useMemo(() => { const d = new Date(wakeTarget); d.setMinutes(d.getMinutes() - preferences.desiredSleep * 60); return d; }, [wakeTarget, preferences.desiredSleep]);
-    const sleepEnd = wakeTarget;
-    const availableMinutes = useMemo(() => Math.max(0, (sleepStart.getTime() - now.getTime()) / 60000), [sleepStart, now]);
-    const priority = useMemo(() => {
-        const hoursBeforeBed = (sleepStart.getTime() - now.getTime()) / 3600000;
-        if (hoursBeforeBed < 0.6 && hoursBeforeBed > -2)
-            return { title: "Lights low. Phone away. 5-min calm.", why: "Sleep time is starting — small calm now protects tomorrow.", action: "Start wind-down now" };
-        if (hoursBeforeBed < 2.5 && hoursBeforeBed > 0)
-            return { title: `Don't start a new show after 9pm`, why: `A ${preferences.episodeLength}-min show steals sleep. Save for tomorrow.`, action: "Save show for tomorrow" };
-        return { title: "Pack work bag now — saves 10 min tomorrow", why: "Getting ready now means less rushing and more sleep.", action: "Pack bag now" };
-    }, [sleepStart, now, preferences.episodeLength]);
-    const nowSentence = useMemo(() => `${fmtDateLong(shiftStart)} work at ${fmtTime(shiftStart)}. ${priority.title}`, [shiftStart, priority.title]);
-    useEffect(() => { if (!toast)
-        return; const t = setTimeout(() => setToast(null), 3000); return () => clearTimeout(t); }, [toast]);
-    useEffect(() => {
-        if (!nowHiddenUntil)
-            return;
-        const check = () => {
-            if (Date.now() >= nowHiddenUntil) {
-                setNowHiddenUntil(null);
-                setNowCollapsed(false);
-                setToast("What to do now is back");
-            }
-        };
-        check();
-        const id = setInterval(check, 30000);
-        return () => clearInterval(id);
-    }, [nowHiddenUntil]);
-    const isTempHidden = !!(nowHiddenUntil && nowHiddenUntil > Date.now());
-    const isNowCollapsedEffective = nowCollapsed || isTempHidden;
-    const hiddenMinutesLeft = useMemo(() => {
-        if (!nowHiddenUntil)
-            return 0;
-        return Math.max(0, Math.ceil((nowHiddenUntil - Date.now()) / 60000));
-    }, [nowHiddenUntil, now]);
-    function triggerHaptic() { var _a, _b; try {
-        (_b = (_a = navigator).vibrate) === null || _b === void 0 ? void 0 : _b.call(_a, 20);
-    }
-    catch { } }
-    function toggleNowCollapsed() {
-        if (nowPinned && !isNowCollapsedEffective) {
-            setToast("Unpin first to hide — tap ••• then Unpin");
-            setShowNowMenu(true);
-            return;
-        }
-        triggerHaptic();
-        beepDone();
-        if (isNowCollapsedEffective) {
-            setNowCollapsed(false);
-            setNowHiddenUntil(null);
-            setToast("Showing what to do now");
-        }
-        else {
-            setNowCollapsed(true);
-            setToast("Hidden — tap green pill to show");
-        }
-        setShowNowMenu(false);
-    }
-    function hideForOneHour() {
-        triggerHaptic();
-        const until = Date.now() + 60 * 60 * 1000;
-        setNowHiddenUntil(until);
-        setNowCollapsed(true);
-        setShowNowMenu(false);
-        setToast("Hidden for 1 hour");
-        beepDone();
-    }
-    function hideUntilTomorrow() {
-        triggerHaptic();
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        tomorrow.setHours(6, 0, 0, 0);
-        setNowHiddenUntil(tomorrow.getTime());
-        setNowCollapsed(true);
-        setShowNowMenu(false);
-        setToast("Hidden until 6 AM");
-        beepDone();
-    }
-    function togglePin() {
-        triggerHaptic();
-        const next = !nowPinned;
-        setNowPinned(next);
-        if (next) {
-            setNowCollapsed(false);
-            setNowHiddenUntil(null);
-        }
-        setShowNowMenu(false);
-        setToast(next ? "Pinned — stays visible" : "Unpinned");
-        beepDone();
-    }
-    function logMeal(desc) { const m = { id: Date.now().toString(), at: new Date().toISOString(), description: desc, categories: ["energy"] }; setMeals([m, ...meals]); setToast(`Saved: ${desc}`); beepDone(); }
-    const totalPlanned = tasks.filter(t => !t.done).reduce((s, t) => s + t.estimate, 0);
-    const quietMessage = `Please be quiet — ${preferences.daytimeSleeper ? "I sleep in day" : "I sleep for early work"}: ${fmtTime(sleepStart)} to ${fmtTime(sleepEnd)}. Headphones please. Text, don't call. Thanks!`;
-    const foodNeedsPlain = useMemo(() => {
-        if (preferences.trainedToday && preferences.heavySweat)
-            return "You sweated a lot. Water + salty snack + banana. That's the best choice now.";
-        if (preferences.trainedToday)
-            return "You moved a lot. Water + yogurt + banana. Small action that helps most.";
-        return "Balanced meal + water. Rice, beans, chicken or tofu, fruit, yogurt.";
-    }, [preferences.trainedToday, preferences.heavySweat]);
-    return (React.createElement("div", { className: "min-h-screen bg-white text-black selection:bg-black selection:text-white" },
-        React.createElement("style", null, `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&family=Fraunces:opsz,wght@9..144,700&display=swap'); *{font-family:Inter,system-ui,sans-serif} .display{font-family:Fraunces,serif} button:active{transform:scale(0.985)} .tap{ min-height:56px } .now-card-transition{ transition: max-height 380ms ease, opacity 320ms ease, transform 320ms ease } .pulse-green{ animation: pulseGreen 2s infinite } @keyframes pulseGreen{ 0%{ box-shadow:0 0 0 0 rgba(22,163,74,0.6)} 70%{ box-shadow:0 0 0 10px rgba(22,163,74,0)} 100%{ box-shadow:0 0 0 0 rgba(22,163,74,0)} } body{ line-height:1.6 }`),
-        React.createElement("div", { className: "sticky top-0 z-30 bg-white border-b-[3px] border-black" },
-            React.createElement("div", { className: "max-w-[720px] mx-auto px-5 pt-5 pb-5" },
-                React.createElement("div", { className: "flex items-start justify-between gap-6" },
-                    React.createElement("div", { className: "space-y-1" },
-                        React.createElement("div", { className: "display text-[28px] sm:text-[34px] leading-tight tracking-tight mt-2 mb-1" }, "WorkWell \u2014 No Bulky View"),
-                        React.createElement("div", { className: "text-[15px] leading-relaxed font-bold" },
-                            "Next: ",
-                            fmtDateLong(shiftStart),
-                            " at ",
-                            fmtTime(shiftStart),
-                            "\u2013",
-                            fmtTime(shiftEnd))),
-                    React.createElement("button", { onClick: () => setShowHelp(true), className: "tap rounded-full bg-black text-white px-5 text-[18px] font-bold flex items-center gap-3 shrink-0" },
-                        React.createElement(HelpCircle, { className: "w-6 h-6" }),
-                        " Help")),
-                React.createElement("div", { className: "mt-6" },
-                    React.createElement("div", { id: "now-card-region", role: "region", "aria-label": "What to do now", "aria-hidden": isNowCollapsedEffective ? true : false, className: `now-card-transition overflow-hidden ${isNowCollapsedEffective ? "max-h-0 opacity-0 pointer-events-none" : "max-h-[520px] opacity-100"}`, onTouchStart: (e) => { touchStartY.current = e.touches[0].clientY; }, onTouchEnd: (e) => {
-                            if (touchStartY.current === null)
-                                return;
-                            const delta = e.changedTouches[0].clientY - touchStartY.current;
-                            if (delta < -60) {
-                                toggleNowCollapsed();
-                            }
-                            touchStartY.current = null;
-                        } },
-                        React.createElement("div", { className: "rounded-[24px] bg-black text-white p-6 flex gap-4 items-start" },
-                            React.createElement("div", { className: "mt-0.5 shrink-0 h-11 w-11 rounded-full bg-white text-black grid place-items-center" },
-                                React.createElement(SunMedium, { className: "h-6 w-6" })),
-                            React.createElement("div", { className: "min-w-0 flex-1 space-y-2" },
-                                React.createElement("div", { className: "text-[13px] uppercase tracking-[0.18em] font-bold opacity-80" }, "What to do NOW"),
-                                React.createElement("div", { className: "text-[20px] sm:text-[22px] leading-snug font-bold mt-2 mb-1" }, nowSentence),
-                                React.createElement("div", { className: "text-[13px] leading-relaxed opacity-70" }, "Tap card for 1-line why. No extra screen.")),
-                            React.createElement("button", { onClick: (e) => { e.stopPropagation(); speak(nowSentence); setToast("Reading aloud"); }, "aria-label": "Read it to me", className: "tap h-14 w-14 rounded-full bg-white text-black grid place-items-center shrink-0 border-2 border-white" },
-                                React.createElement(Volume2, { className: "w-7 h-7" }))),
-                        React.createElement("div", { className: "mt-4 flex gap-4 items-stretch" },
-                            React.createElement("button", { "aria-expanded": !isNowCollapsedEffective, "aria-controls": "now-card-region", onClick: toggleNowCollapsed, className: "tap flex-1 rounded-[16px] bg-zinc-100 border-[3px] border-black flex items-center justify-center gap-3 text-[18px] font-extrabold min-h-[56px] h-[56px]" },
-                                React.createElement("span", { className: "text-[20px]" }, "\u25BC"),
-                                React.createElement("span", null, "Tap to hide"),
-                                React.createElement(ChevronDown, { className: "w-7 h-7 animate-bounce" })),
-                            React.createElement("button", { "aria-label": "More options", onClick: () => setShowNowMenu(v => !v), className: "tap h-[56px] w-[64px] rounded-[16px] bg-white border-[3px] border-black grid place-items-center" },
-                                React.createElement(EllipsisVertical, { className: "w-7 h-7" })))),
-                    React.createElement("div", { className: `now-card-transition overflow-hidden ${isNowCollapsedEffective ? "max-h-[100px] opacity-100 mt-3" : "max-h-0 opacity-0 pointer-events-none"}`, "aria-hidden": !isNowCollapsedEffective },
-                        React.createElement("button", { "aria-expanded": !isNowCollapsedEffective, "aria-controls": "now-card-region", onClick: toggleNowCollapsed, onTouchStart: (e) => { pillTouchStartY.current = e.touches[0].clientY; }, onTouchEnd: (e) => {
-                                if (pillTouchStartY.current === null)
-                                    return;
-                                const delta = e.changedTouches[0].clientY - pillTouchStartY.current;
-                                if (delta > 60) {
-                                    toggleNowCollapsed();
-                                }
-                                pillTouchStartY.current = null;
-                            }, className: "tap w-full rounded-full bg-white border-[3px] border-green-600 min-h-[56px] px-6 flex items-center justify-between gap-4 pulse-green" },
-                            React.createElement("span", { className: "flex items-center gap-3 text-left" },
-                                React.createElement("span", { className: "h-10 w-10 rounded-full bg-green-600 text-white grid place-items-center shrink-0" },
-                                    React.createElement(ChevronUp, { className: "w-6 h-6" })),
-                                React.createElement("span", { className: "text-[18px] font-extrabold leading-tight tracking-wide" },
-                                    "\u25B2 What to do now \u2014 tap to show ",
-                                    isTempHidden && hiddenMinutesLeft > 0 && React.createElement("span", { className: "ml-2 font-bold text-green-700" },
-                                        "(",
-                                        hiddenMinutesLeft,
-                                        "m)"))),
-                            React.createElement("span", { className: "shrink-0 text-[14px] bg-green-50 border-2 border-green-600 rounded-full px-4 py-1.5 font-bold tracking-widest" }, "SHOW")))))),
-        React.createElement("main", { className: "max-w-[720px] mx-auto px-5 py-6 pb-40 space-y-6" },
-            activeTab === "sleep" && (React.createElement("div", { className: "space-y-6" },
-                React.createElement("div", { onClick: () => setExpanded(expanded === 'sleep' ? null : 'sleep'), className: "rounded-[32px] bg-white border-[3px] border-black p-6 md:p-8 shadow-[8px_8px_0px_0px_black] cursor-pointer" },
-                    React.createElement("div", { className: "flex items-start justify-between gap-4" },
-                        React.createElement("div", { className: "flex items-center gap-3" },
-                            React.createElement(Moon, { className: "w-7 h-7" }),
-                            React.createElement("h2", { className: "display text-[26px] leading-tight" }, "Sleep time")),
-                        React.createElement("span", { className: "text-[12px] font-bold tracking-widest border-2 border-black rounded-full px-3 py-1 bg-zinc-100" }, expanded === 'sleep' ? "TAP TO HIDE" : "TAP FOR WHY")),
-                    React.createElement("div", { className: "mt-4" },
-                        React.createElement("div", { className: "text-[15px] font-bold uppercase tracking-widest opacity-70" },
-                            "Up at ",
-                            fmtTime(sleepEnd),
-                            " \u2022 Sleep ",
-                            fmtTime(sleepStart),
-                            "\u2013",
-                            fmtTime(sleepEnd)),
-                        React.createElement("div", { className: "text-[24px] font-extrabold leading-tight mt-3" }, priority.title),
-                        React.createElement("div", { className: "text-[18px] leading-relaxed mt-2" }, priority.why)),
-                    expanded === 'sleep' && (React.createElement("div", { className: "mt-4 rounded-[16px] bg-zinc-100 border-2 border-black p-4 text-[16px] leading-relaxed" },
-                        "protected sleep window = your sleep time that we protect. If you watch ",
-                        preferences.episodeLength,
-                        "m now, you get ",
-                        fmtDuration(Math.max(0, preferences.desiredSleep * 60 - Math.max(0, (now.getTime() + preferences.episodeLength * 60000 - sleepStart.getTime()) / 60000))),
-                        " sleep instead of ",
-                        fmtDuration(preferences.desiredSleep * 60),
-                        ".")),
-                    React.createElement("button", { onClick: (e) => { e.stopPropagation(); setToast(`${priority.action} — good choice!`); beepDone(); }, className: "tap mt-5 w-full rounded-full bg-green-600 text-white text-[22px] font-extrabold border-[3px] border-black min-h-[64px]" },
-                        priority.action,
-                        " \u2713"),
-                    React.createElement("div", { className: "mt-3 text-[13px] text-center font-bold opacity-60" }, "Card tap = 1 extra line. No new screen. Done button = action.")),
-                React.createElement("div", { onClick: () => setExpanded(expanded === 'quiet' ? null : 'quiet'), className: "rounded-[28px] bg-white border-[3px] border-black p-6 cursor-pointer" },
-                    React.createElement("div", { className: "flex items-center justify-between gap-4" },
-                        React.createElement("div", { className: "text-[20px] font-extrabold leading-tight" }, "Quiet note for family \u2014 tap to show"),
-                        React.createElement("span", { className: "text-[12px] font-bold tracking-widest border-2 border-black rounded-full px-3 py-1 bg-zinc-100 shrink-0" }, expanded === 'quiet' ? "HIDE" : "SHOW")),
-                    React.createElement("div", { className: "text-[16px] leading-relaxed mt-2" }, "One sentence to show family when you sleep."),
-                    expanded === 'quiet' && (React.createElement("div", { className: "mt-4 rounded-[16px] bg-black text-white p-5 text-[20px] font-bold leading-tight text-center" },
-                        quietMessage,
-                        React.createElement("div", { className: "mt-4 flex gap-3" },
-                            React.createElement("button", { onClick: (e) => { var _a; e.stopPropagation(); (_a = navigator.clipboard) === null || _a === void 0 ? void 0 : _a.writeText(quietMessage); setToast("Copied"); }, className: "tap flex-1 rounded-full bg-white text-black text-[16px] font-bold" }, "Copy"),
-                            React.createElement("button", { onClick: (e) => { e.stopPropagation(); speak(quietMessage); }, className: "tap flex-1 rounded-full bg-zinc-800 text-white text-[16px] font-bold border-2 border-white" }, "Read aloud")))),
-                    React.createElement("button", { onClick: (e) => { e.stopPropagation(); setToast("Note ready — show family"); beepDone(); }, className: "tap mt-4 w-full rounded-full bg-black text-white text-[18px] font-bold min-h-[56px]" }, "Done \u2014 note ready \u2713")))),
-            activeTab === "time" && (React.createElement("div", { className: "space-y-6" },
-                React.createElement("div", { onClick: () => setExpanded(expanded === 'time' ? null : 'time'), className: "rounded-[32px] bg-black text-white border-[3px] border-black p-6 md:p-8 shadow-[8px_8px_0px_0px_white] cursor-pointer" },
-                    React.createElement("div", { className: "flex items-center justify-between gap-4" },
-                        React.createElement("div", { className: "flex items-center gap-3" },
-                            React.createElement(Clock3, { className: "w-7 h-7" }),
-                            React.createElement("h2", { className: "display text-[26px] leading-tight" }, "Evening time")),
-                        React.createElement("span", { className: "text-[12px] font-bold tracking-widest border-2 border-white rounded-full px-3 py-1 bg-white text-black" }, expanded === 'time' ? "HIDE" : "WHY?")),
-                    React.createElement("div", { className: "display text-[44px] leading-none mt-5" },
-                        fmtDuration(availableMinutes),
-                        " free"),
-                    React.createElement("div", { className: "text-[18px] leading-relaxed mt-2" },
-                        "Until sleep at ",
-                        fmtTime(sleepStart),
-                        " \u2022 You planned ",
-                        fmtDuration(totalPlanned)),
-                    expanded === 'time' && (React.createElement("div", { className: "mt-4 rounded-[12px] bg-white text-black p-4 text-[15px] leading-relaxed border-2 border-white" }, "available time = time you have before bed. If planned > free, sleep suffers. Best choice = keep sleep.")),
-                    React.createElement("div", { className: "mt-6 rounded-[16px] bg-white text-black p-4 border-2 border-white" },
-                        React.createElement("div", { className: "text-[16px] font-bold" }, "Tonight \u2014 tap circle when done"),
-                        React.createElement("div", { className: "mt-3 space-y-3" }, tasks.map(t => (React.createElement("div", { key: t.id, className: "flex items-center justify-between gap-3" },
-                            React.createElement("button", { onClick: (e) => { e.stopPropagation(); setTasks(tasks.map(x => x.id === t.id ? { ...x, done: !x.done } : x)); if (!t.done)
-                                    beepDone(); }, className: "flex items-center gap-3 text-left flex-1 min-h-[48px]" },
-                                React.createElement("span", { className: `h-9 w-9 rounded-full border-2 border-black grid place-items-center shrink-0 ${t.done ? "bg-green-600 text-white" : "bg-white text-black"}` }, t.done ? "✓" : ""),
-                                React.createElement("span", { className: `text-[18px] font-bold leading-snug ${t.done ? "line-through opacity-60" : ""}` },
-                                    t.title,
-                                    " (",
-                                    t.estimate,
-                                    "m)")),
-                            React.createElement("button", { onClick: (e) => { e.stopPropagation(); setTasks(tasks.filter(x => x.id !== t.id)); }, className: "h-9 w-9 grid place-items-center rounded-full border-2 border-black bg-white text-black" },
-                                React.createElement(X, { className: "w-4 h-4" }))))))),
-                    React.createElement("button", { onClick: (e) => { e.stopPropagation(); const first = tasks.find(t => !t.done); if (first) {
-                            setToast(`Do now: ${first.title} — ${first.estimate} min`);
-                            speak(first.title);
-                        }
-                        else {
-                            setToast("All done — rest now");
-                        } beepDone(); }, className: "tap mt-6 w-full rounded-full bg-green-500 text-black text-[20px] font-extrabold border-[3px] border-white min-h-[60px]" }, "Main action: Do one now \u2713")))),
-            activeTab === "food" && (React.createElement("div", { className: "space-y-6" },
-                React.createElement("div", { onClick: () => setExpanded(expanded === 'food' ? null : 'food'), className: "rounded-[32px] bg-white border-[3px] border-black p-6 md:p-8 cursor-pointer" },
-                    React.createElement("div", { className: "flex items-center justify-between gap-4" },
-                        React.createElement("div", { className: "flex items-center gap-3" },
-                            React.createElement(UtensilsCrossed, { className: "w-7 h-7" }),
-                            React.createElement("h2", { className: "display text-[26px] leading-tight" }, "Best food next")),
-                        React.createElement("span", { className: "text-[12px] font-bold tracking-widest border-2 border-black rounded-full px-3 py-1 bg-zinc-100" }, expanded === 'food' ? "HIDE" : "WHY?")),
-                    React.createElement("div", { className: "mt-4 rounded-[20px] bg-green-600 text-white border-[3px] border-black p-5" },
-                        React.createElement("div", { className: "text-[20px] font-bold leading-snug" }, foodNeedsPlain),
-                        React.createElement("div", { className: "text-[14px] leading-relaxed mt-2 opacity-90" }, "One sentence why: best available option right now.")),
-                    React.createElement("div", { className: "mt-6 space-y-3" }, [
-                        { name: "Yogurt + banana + nuts", icon: "🍌" },
-                        { name: "Rice + beans + fruit", icon: "🍚" },
-                        { name: "Turkey sandwich + water", icon: "🥪" },
-                    ].map(f => (React.createElement("button", { key: f.name, onClick: (e) => { e.stopPropagation(); logMeal(f.name); }, className: "tap w-full rounded-[20px] border-[3px] border-black bg-white px-5 py-4 flex items-center justify-between text-left min-h-[60px]" },
-                        React.createElement("span", { className: "flex items-center gap-3" },
-                            React.createElement("span", { className: "text-[24px]" }, f.icon),
-                            React.createElement("span", { className: "text-[18px] font-bold leading-snug" }, f.name)),
-                        React.createElement("span", { className: "rounded-full bg-black text-white px-4 py-1 text-[14px] font-bold shrink-0" }, "I ate this \u2713"))))),
-                    expanded === 'food' && (React.createElement("div", { className: "mt-4 rounded-[16px] bg-amber-50 border-[3px] border-amber-600 p-4 text-[16px] leading-relaxed" }, "Tap I ate this = Done. Extra line shows why \u2014 no new screen. If kidney/heart limits, ask doctor before adding salt.")),
-                    React.createElement("button", { onClick: (e) => { e.stopPropagation(); logMeal("Balanced meal + water"); }, className: "tap mt-5 w-full rounded-full bg-black text-white text-[18px] font-bold min-h-[60px]" }, "Done \u2014 ate something good \u2713")))),
-            activeTab === "setup" && (React.createElement("div", { className: "space-y-6" },
-                React.createElement("div", { className: "rounded-[32px] bg-white border-[3px] border-black p-6 md:p-8" },
-                    React.createElement("div", { className: "flex items-center gap-3" },
-                        React.createElement(Settings2, { className: "w-7 h-7" }),
-                        React.createElement("h2", { className: "display text-[26px] leading-tight" }, "Setup \u2014 work time")),
-                    React.createElement("div", { className: "mt-5" },
-                        React.createElement("div", { className: "text-[18px] font-extrabold leading-tight" }, "What time is work tomorrow?"),
-                        React.createElement("div", { className: "text-[14px] leading-relaxed opacity-70 mt-1" }, "One tap to set. No extra view."),
-                        React.createElement("div", { className: "mt-4 grid grid-cols-2 gap-4" },
-                            React.createElement("label", { className: "block" },
-                                React.createElement("span", { className: "text-[15px] font-bold" }, "Starts"),
-                                React.createElement("input", { type: "time", value: preferences.nextShiftStart.slice(11, 16), onChange: e => { const d = preferences.nextShiftStart.slice(0, 10); setPreferences({ ...preferences, nextShiftStart: `${d}T${e.target.value}` }); }, className: "tap mt-2 w-full rounded-full border-[3px] border-black px-5 text-[22px] font-bold min-h-[56px] bg-white" })),
-                            React.createElement("label", { className: "block" },
-                                React.createElement("span", { className: "text-[15px] font-bold" }, "Ends"),
-                                React.createElement("input", { type: "time", value: preferences.nextShiftEnd.slice(11, 16), onChange: e => { const d = preferences.nextShiftEnd.slice(0, 10); setPreferences({ ...preferences, nextShiftEnd: `${d}T${e.target.value}` }); }, className: "tap mt-2 w-full rounded-full border-[3px] border-black px-5 text-[22px] font-bold min-h-[56px] bg-white" })))),
-                    React.createElement("div", { className: "mt-8" },
-                        React.createElement("div", { className: "text-[18px] font-bold leading-tight" }, "Get ready + drive?"),
-                        React.createElement("div", { className: "mt-3 flex flex-wrap gap-3" }, [30, 45, 60, 90].map(m => {
-                            const total = preferences.commute + preferences.prep;
-                            return React.createElement("button", { key: m, onClick: () => { const half = Math.floor(m / 2); setPreferences({ ...preferences, commute: m - half, prep: half }); beepDone(); }, className: `tap rounded-full border-[3px] px-5 text-[18px] font-bold min-h-[52px] ${total === m ? "bg-black text-white" : "bg-white border-black"}` }, m >= 60 ? `${Math.floor(m / 60)}h${m % 60 ? "30m" : ""}` : `${m}m`);
-                        }))),
-                    React.createElement("div", { className: "mt-8" },
-                        React.createElement("div", { className: "text-[18px] font-bold leading-tight" }, "Sleep you want?"),
-                        React.createElement("div", { className: "mt-3 flex flex-wrap gap-3" }, [6, 7, 7.5, 8].map(h => (React.createElement("button", { key: h, onClick: () => setPreferences({ ...preferences, desiredSleep: h }), className: `tap rounded-full px-5 border-[3px] text-[18px] font-bold min-h-[52px] ${preferences.desiredSleep === h ? "bg-black text-white" : "bg-white border-black"}` },
-                            h,
-                            "h"))))),
-                    React.createElement("div", { className: "mt-8 space-y-3" },
-                        React.createElement("button", { onClick: () => setPreferences({ ...preferences, daytimeSleeper: !preferences.daytimeSleeper }), className: `tap w-full rounded-[16px] border-[3px] border-black px-5 py-3 flex items-center justify-between text-left min-h-[56px] ${preferences.daytimeSleeper ? "bg-black text-white" : "bg-white"}` },
-                            React.createElement("span", { className: "text-[18px] font-bold" }, "I sleep in day"),
-                            React.createElement("span", { className: "font-extrabold" }, preferences.daytimeSleeper ? "ON ✓" : "OFF")),
-                        React.createElement("button", { onClick: () => setPreferences({ ...preferences, trainedToday: !preferences.trainedToday }), className: `tap w-full rounded-[16px] border-[3px] border-black px-5 py-3 flex items-center justify-between text-left min-h-[56px] ${preferences.trainedToday ? "bg-green-600 text-white" : "bg-white"}` },
-                            React.createElement("span", { className: "text-[18px] font-bold" }, "Hard work / play today"),
-                            React.createElement("span", { className: "font-extrabold" }, preferences.trainedToday ? "YES ✓" : "NO"))),
-                    React.createElement("div", { className: "mt-6 rounded-xl bg-zinc-100 border-2 border-black p-4 text-[14px] leading-relaxed" }, "No bulky view: card tap = 1 extra line only. Main action + why + Done."))))),
-        React.createElement("div", { className: "fixed bottom-0 inset-x-0 z-40 bg-white border-t-[4px] border-black" },
-            React.createElement("div", { className: "max-w-[720px] mx-auto grid grid-cols-4 gap-0" }, [
-                { id: "sleep", label: "SLEEP", icon: Moon, desc: "1 card" },
-                { id: "time", label: "TIME", icon: Clock3, desc: "1 card" },
-                { id: "food", label: "FOOD", icon: UtensilsCrossed, desc: "1 card" },
-                { id: "setup", label: "SETUP", icon: Settings2, desc: "set work" },
-            ].map(tab => {
-                const active = activeTab === tab.id;
-                const Icon = tab.icon;
-                return (React.createElement("button", { key: tab.id, onClick: () => { setActiveTab(tab.id); setExpanded(null); beepDone(); }, className: `tap flex flex-col items-center justify-center py-4 min-h-[92px] border-r last:border-r-0 border-black gap-1 ${active ? "bg-black text-white" : "bg-white text-black"}` },
-                    React.createElement(Icon, { className: "w-8 h-8 mb-0.5" }),
-                    React.createElement("span", { className: "text-[16px] font-extrabold tracking-widest mt-1 leading-tight" }, tab.label),
-                    React.createElement("span", { className: `text-[11px] leading-relaxed ${active ? "text-white/70" : "text-black/60"}` }, tab.desc)));
-            }))),
-        toast && (React.createElement("div", { className: "fixed bottom-[110px] left-1/2 -translate-x-1/2 z-50 max-w-[90%] rounded-full bg-black text-white px-6 py-3 text-[18px] font-bold border-[3px] border-white shadow-[0_8px_24px_rgba(0,0,0,0.4)] leading-relaxed" }, toast)),
-        showNowMenu && (React.createElement("div", { className: "fixed inset-0 z-[70] flex flex-col justify-end" },
-            React.createElement("div", { className: "absolute inset-0 bg-black/60 backdrop-blur-sm", onClick: () => setShowNowMenu(false) }),
-            React.createElement("div", { className: "relative bg-white rounded-t-[32px] border-t-[4px] border-x-[3px] border-black shadow-[0_-12px_40px_rgba(0,0,0,0.25)] max-w-[720px] w-full mx-auto p-6 md:p-8 pb-10" },
-                React.createElement("div", { className: "flex items-center justify-between gap-6 mb-6" },
-                    React.createElement("div", null,
-                        React.createElement("div", { className: "display text-[28px] leading-tight tracking-tight" }, "\u2022\u2022\u2022 menu \u2014 no bulky view"),
-                        React.createElement("div", { className: "text-[16px] leading-relaxed mt-1 text-zinc-600" }, "Control NOW card. Tap card = 1 line only.")),
-                    React.createElement("button", { onClick: () => setShowNowMenu(false), className: "tap h-12 w-12 rounded-full bg-black text-white grid place-items-center shrink-0" },
-                        React.createElement(X, { className: "w-6 h-6" }))),
-                React.createElement("div", { className: "space-y-4" },
-                    React.createElement("button", { onClick: hideForOneHour, className: "tap w-full rounded-[20px] bg-black text-white border-[3px] border-black px-6 py-5 text-left min-h-[72px] flex items-start gap-4" },
-                        React.createElement("span", { className: "h-12 w-12 rounded-full bg-white text-black grid place-items-center shrink-0" },
-                            React.createElement(Clock, { className: "w-7 h-7" })),
-                        React.createElement("span", { className: "flex-1" },
-                            React.createElement("span", { className: "text-[20px] font-extrabold leading-tight" }, "Hide for 1 hour"),
-                            React.createElement("span", { className: "text-[14px] leading-relaxed text-white/70 mt-1 block" }, "Hides NOW card 60 min. Auto returns."))),
-                    React.createElement("button", { onClick: hideUntilTomorrow, className: "tap w-full rounded-[20px] bg-white text-black border-[3px] border-black px-6 py-5 text-left min-h-[72px] flex items-start gap-4" },
-                        React.createElement("span", { className: "h-12 w-12 rounded-full bg-amber-400 text-black border-2 border-black grid place-items-center shrink-0" },
-                            React.createElement(Sunrise, { className: "w-7 h-7" })),
-                        React.createElement("span", { className: "flex-1" },
-                            React.createElement("span", { className: "text-[20px] font-extrabold leading-tight" }, "Hide until tomorrow"),
-                            React.createElement("span", { className: "text-[14px] leading-relaxed text-zinc-600 mt-1 block" }, "Until 6 AM tomorrow."))),
-                    React.createElement("button", { onClick: togglePin, className: `tap w-full rounded-[20px] border-[3px] border-black px-6 py-5 text-left min-h-[72px] flex items-start gap-4 ${nowPinned ? "bg-green-600 text-white" : "bg-white text-black"}` },
-                        React.createElement("span", { className: `h-12 w-12 rounded-full grid place-items-center shrink-0 border-2 ${nowPinned ? "bg-white text-green-700 border-white" : "bg-zinc-100 text-black border-black"}` }, nowPinned ? React.createElement(PinOff, { className: "w-7 h-7" }) : React.createElement(Pin, { className: "w-7 h-7" })),
-                        React.createElement("span", { className: "flex-1" },
-                            React.createElement("span", { className: "text-[20px] font-extrabold leading-tight" }, nowPinned ? "Unpin card" : "Keep it pinned"),
-                            React.createElement("span", { className: `text-[14px] leading-relaxed mt-1 block ${nowPinned ? "text-white/80" : "text-zinc-600"}` }, nowPinned ? "Pinned always visible." : "Pin keeps NOW always visible."))),
-                    React.createElement("button", { onClick: () => { setShowNowMenu(false); toggleNowCollapsed(); }, className: "tap w-full rounded-[20px] bg-zinc-100 text-black border-[3px] border-black px-6 py-4 flex items-center justify-between gap-4 min-h-[60px]" },
-                        React.createElement("span", { className: "flex items-center gap-4" },
-                            React.createElement("span", { className: "h-10 w-10 rounded-full bg-white border-2 border-black grid place-items-center" },
-                                React.createElement(ChevronDown, { className: "w-6 h-6" })),
-                            React.createElement("span", { className: "text-[18px] font-extrabold" }, "Hide now")),
-                        React.createElement("span", { className: "text-[13px] text-zinc-600" }, "Tap green pill to show")),
-                    React.createElement("button", { onClick: () => setShowNowMenu(false), className: "tap w-full rounded-full bg-white border-[3px] border-black min-h-[56px] text-[18px] font-extrabold" }, "Close"))))),
-        showHelp && (React.createElement("div", { className: "fixed inset-0 z-[60] flex flex-col justify-end" },
-            React.createElement("div", { className: "absolute inset-0 bg-black/50 backdrop-blur-sm", onClick: () => setShowHelp(false) }),
-            React.createElement("div", { className: "relative bg-white rounded-t-[32px] border-t-[4px] border-x-[3px] border-black shadow-[0_-12px_40px_rgba(0,0,0,0.25)] max-w-[720px] w-full mx-auto p-6 md:p-8 pb-10" },
-                React.createElement("div", { className: "flex items-center justify-between gap-6" },
-                    React.createElement("div", { className: "display text-[28px] leading-tight" }, "How to use \u2014 no bulky view"),
-                    React.createElement("button", { onClick: () => setShowHelp(false), className: "tap h-12 w-12 rounded-full bg-black text-white grid place-items-center" },
-                        React.createElement(X, { className: "w-6 h-6" }))),
-                React.createElement("div", { className: "mt-6 space-y-4" },
-                    [
-                        { n: "1", t: "Set work time in SETUP — big buttons only." },
-                        { n: "2", t: "Top shows what to do NOW — one sentence." },
-                        { n: "3", t: "Tap any card — shows 1 extra line why. Tap again hides. No new screen." },
-                        { n: "4", t: "Green button = main action. Circle = Done ✓" },
-                    ].map(s => (React.createElement("div", { key: s.n, className: "rounded-[16px] border-[3px] border-black p-4 flex gap-4 bg-zinc-50" },
-                        React.createElement("div", { className: "h-10 w-10 rounded-full bg-black text-white grid place-items-center font-extrabold shrink-0" }, s.n),
-                        React.createElement("div", { className: "text-[18px] font-bold leading-relaxed" }, s.t)))),
-                    React.createElement("div", { className: "rounded-[16px] bg-green-50 border-[3px] border-green-600 p-4 text-[16px] leading-relaxed" },
-                        React.createElement("span", { className: "font-extrabold" }, "Flip-phone simple:"),
-                        " No View Details button. No modal. No chart. Only: action + 1 sentence why + Done."),
-                    React.createElement("button", { onClick: () => setShowHelp(false), className: "tap w-full rounded-full bg-black text-white text-[20px] font-extrabold min-h-[60px]" }, "Got it \u2014 start using \u2713")))))));
-}
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(React.createElement(App, null));
+(() => {
+  const $ = (s, root=document) => root.querySelector(s);
+  const esc = (s='') => String(s).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  const id = () => (crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`);
+  const localDateTime = d => { const p=n=>String(n).padStart(2,'0'); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`; };
+  const tomorrowAt = (h,m=0) => { const d=new Date(); d.setDate(d.getDate()+1); d.setHours(h,m,0,0); return localDateTime(d); };
+  const todayAt = (h,m=0) => { const d=new Date(); d.setHours(h,m,0,0); return localDateTime(d); };
+  const defaultState = () => ({
+    version: 3,
+    settings: { desiredSleep:7.5, prepMinutes:35, commuteMinutes:25, commuteBufferMinutes:10, protectedBuffer:20 },
+    shifts: [{ id:id(), start:tomorrowAt(6,30), end:tomorrowAt(15,0), location:'Main work site', overtimePossible:false }],
+    tasks: [
+      {id:id(),title:'Pack work bag',estimateMinutes:10,category:'must',dueBefore:'leave',done:false,plannedDate:new Date().toISOString().slice(0,10),rollovers:0},
+      {id:id(),title:'Make lunch',estimateMinutes:10,category:'must',dueBefore:'leave',done:false,plannedDate:new Date().toISOString().slice(0,10),rollovers:0},
+      {id:id(),title:'Lay out clothes',estimateMinutes:5,category:'useful',dueBefore:'',done:false,plannedDate:new Date().toISOString().slice(0,10),rollovers:0},
+      {id:id(),title:'Watch an episode',estimateMinutes:42,category:'wait',dueBefore:'',done:false,plannedDate:new Date().toISOString().slice(0,10),rollovers:0}
+    ],
+    recovery:{energy:'okay',dayType:'normal',mealLogged:false},
+    ui:{tab:'now', showSettings:false, showExplanation:false},
+    history:[]
+  });
+  function load(){ try { const s=JSON.parse(localStorage.getItem('workwell_engine_v3')); return s && s.settings ? s : defaultState(); } catch(e){ return defaultState(); } }
+  let state=load(), toastTimer;
+  function save(){ localStorage.setItem('workwell_engine_v3', JSON.stringify(state)); }
+  function shiftStart(s){ return new Date(s.start); }
+  function shiftEnd(s){ return new Date(s.end); }
+  function nextShift(now=new Date()) { return state.shifts.filter(s=>shiftStart(s)>now).sort((a,b)=>shiftStart(a)-shiftStart(b))[0] || null; }
+  function addMinutes(d, mins){ const x=new Date(d); x.setMinutes(x.getMinutes()+mins); return x; }
+  function plan(now=new Date()){
+    const shift=nextShift(now); if(!shift) return {shift:null};
+    const start=shiftStart(shift), end=shiftEnd(shift);
+    const leave=addMinutes(start, -(state.settings.commuteMinutes + state.settings.commuteBufferMinutes));
+    const wake=addMinutes(leave, -state.settings.prepMinutes);
+    const bedtime=addMinutes(wake, -(state.settings.desiredSleep*60));
+    const available=Math.max(0,Math.floor((bedtime-now)/60000));
+    const active=state.tasks.filter(t=>!t.done);
+    const mins=cat=>active.filter(t=>t.category===cat).reduce((a,t)=>a+Number(t.estimateMinutes||0),0);
+    const must=mins('must'), useful=mins('useful'), wait=mins('wait');
+    const planned=must+useful; const buffer=available-must;
+    return {shift,start,end,leave,wake,bedtime,available,active,must,useful,wait,planned,buffer,required:must+state.settings.protectedBuffer};
+  }
+  function fmtTime(d){ return d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}); }
+  function fmtDate(d){ return d.toLocaleDateString([], {weekday:'long',month:'short',day:'numeric'}); }
+  function duration(n){ n=Math.max(0,Math.round(n)); const h=Math.floor(n/60), m=n%60; return h ? (m?`${h}h ${m}m`:`${h}h`) : `${m}m`; }
+  function taskSort(a,b){ const rank={must:0,useful:1,wait:2}; return rank[a.category]-rank[b.category] || Number(a.estimateMinutes)-Number(b.estimateMinutes); }
+  function canDo(t,p){ if(t.category==='must') return true; if(state.recovery.energy==='drained') return false; const before=Math.max(0,p.available-p.must-state.settings.protectedBuffer); return t.category==='useful' ? Number(t.estimateMinutes)<=before : Number(t.estimateMinutes)<=Math.max(0,before-p.useful); }
+  function recommendation(p){
+    if(!p.shift) return {title:'Add your next shift',time:'1 minute',why:'WorkWell needs a real work start time before it can plan your leave, wake, and bedtime.',action:'Add shift',type:'setup'};
+    if(p.available<=0) return {title:'Start winding down',time:'Now',why:'Your target bedtime has arrived. Protect tomorrow by stopping optional tasks.',action:'Begin wind-down',type:'winddown'};
+    const mandatory=p.active.filter(t=>t.category==='must').sort(taskSort);
+    const suitable=p.active.filter(t=>canDo(t,p)).sort(taskSort);
+    const next=mandatory[0] || suitable[0];
+    if(!next) return {title:'You are done for tonight',time:duration(p.available)+' left',why:'Your remaining tasks are optional or do not fit your protected sleep plan.',action:'Rest without extending bedtime',type:'rest'};
+    let why=`It ${next.dueBefore==='leave'?'must be finished before you leave':'fits your plan'} and protects your ${next.dueBefore==='leave'?'morning':'sleep'} buffer.`;
+    if(state.recovery.energy==='drained') why='You marked yourself as drained. Finish the essential task, then let optional chores wait.';
+    if(p.buffer<state.settings.protectedBuffer && next.category!=='must') why='Time is tight tonight. This is the smallest useful task that still fits before your protected buffer.';
+    return {title:next.title,time:duration(next.estimateMinutes),why,action:'Mark done',task:next,type:'task'};
+  }
+  function recoveryAdvice(p){
+    const r=state.recovery;
+    if(p.available<=45) return {title:'Light snack, then wind down',why:`Bedtime is in ${duration(p.available)}. Keep food simple and avoid adding optional chores tonight.`,button:'Log light snack'};
+    if(r.dayType==='workout' || r.dayType==='active') return {title:'Eat a meal with carbohydrate + protein',why:'You had a physically demanding day. A simple meal now supports recovery before bedtime.',button:'Log meal'};
+    if(r.energy==='drained') return {title:'Drink water and make tonight lighter',why:'Choose the essentials, a simple meal if needed, and an earlier wind-down.',button:'Log recovery'};
+    if(r.dayType==='stress') return {title:'Choose a calm meal and lower stimulation',why:'A lower-pressure evening helps you recover from a high-stress day.',button:'Start wind-down'};
+    return {title:'Eat normally, then protect bedtime',why:'Your schedule and energy do not require a special recovery plan tonight.',button:'Log meal'};
+  }
+  function rollover(){
+    const p=plan(); const date=(p.shift?new Date(p.shift.start):new Date());
+    state.tasks=state.tasks.map(t=>{
+      if(!t.done && t.category!=='must' && !canDo(t,p) && t.plannedDate!==date.toISOString().slice(0,10)) return {...t,plannedDate:date.toISOString().slice(0,10),rollovers:(t.rollovers||0)+1};
+      return t;
+    }); save();
+  }
+  function toast(message){ clearTimeout(toastTimer); let el=$('.toast'); if(!el){el=document.createElement('div');el.className='toast';document.body.appendChild(el)} el.textContent=message; el.classList.remove('hidden'); toastTimer=setTimeout(()=>el.classList.add('hidden'),2800); }
+  function haptic(){ try{navigator.vibrate?.(15)}catch(e){} }
+  function render(){ rollover(); const p=plan(), rec=recommendation(p); document.querySelector('#root').innerHTML=`
+    <div class="app">
+      <header class="top"><div class="toprow"><div><div class="brand">WorkWell</div><div class="sub">Your calm work + recovery autopilot</div></div><button class="iconbtn" data-action="settings" aria-label="Settings">⚙</button></div></header>
+      <main class="screen">${state.ui.tab==='now'?nowView(p,rec):state.ui.tab==='plan'?planView(p):recoveryView(p)}</main>
+    </div>
+    <nav class="bottom"><div class="tabs"><button class="tab ${state.ui.tab==='now'?'active':''}" data-tab="now">NOW</button><button class="tab ${state.ui.tab==='plan'?'active':''}" data-tab="plan">PLAN</button><button class="tab ${state.ui.tab==='recovery'?'active':''}" data-tab="recovery">RECOVERY</button></div></nav>
+    ${state.ui.showSettings?settingsModal():''}
+  `; bind(); }
+  function nowView(p,rec){
+    if(!p.shift) return `<div class="card"><div class="eyebrow">GET STARTED</div><h1 class="title">Set your next shift</h1><p>WorkWell uses your next shift to calculate when to leave, wake up, and start sleeping.</p><button class="button primary" data-action="settings">Set work time</button></div>`;
+    const short=p.buffer<state.settings.protectedBuffer;
+    return `<div class="eyebrow">${p.start>new Date()?fmtDate(p.start).toUpperCase():'TODAY'}</div>
+      <section class="card"><div class="eyebrow">NEXT SHIFT</div><div class="title">${fmtTime(p.start)} work</div><div class="timeline"><div class="time-row"><b>${fmtTime(p.leave)}</b><span>Leave by</span></div><div class="time-row"><b>${fmtTime(p.wake)}</b><span>Wake by</span></div><div class="time-row"><b>${fmtTime(p.bedtime)}</b><span>Bedtime</span></div></div></section>
+      <section class="next"><div class="eyebrow">NEXT STEP</div><div class="tasktitle">${esc(rec.title)}</div><div>${rec.time}</div><div class="reason"><b>Why this now:</b><br>${esc(rec.why)}</div><button class="button primary" data-action="complete-rec">${rec.action} ✓</button><div class="metrics"><div class="metric"><b>${duration(p.must)}</b><span>Essentials</span></div><div class="metric"><b>${duration(p.available)}</b><span>Time left</span></div><div class="metric"><b>${p.buffer>=0?duration(p.buffer):'0m'}</b><span>After essentials</span></div></div></section>
+      <div class="status" data-action="explain">${short?'Tonight is tight — protect essentials and sleep.':'Essentials fit tonight. Optional tasks can wait.'} <b>⌄</b></div>
+      ${state.ui.showExplanation?`<div class="notice">Your protected buffer is ${duration(state.settings.protectedBuffer)}. It is held back so the plan does not treat every free minute as available work.</div>`:''}`;
+  }
+  function planView(p){
+    if(!p.shift) return `<div class="card"><h1 class="title">No next shift</h1><button class="button primary" data-action="settings">Add shift</button></div>`;
+    const cats=[['must','MUST DO'],['useful','USEFUL'],['wait','CAN WAIT']];
+    return `<div class="eyebrow">${fmtDate(p.start).toUpperCase()} PLAN</div><section class="card"><div class="timeline"><div class="time-row"><b>${fmtTime(p.start)}</b><span>Work starts</span></div><div class="time-row"><b>${fmtTime(p.leave)}</b><span>Leave by</span></div><div class="time-row"><b>${fmtTime(p.wake)}</b><span>Wake by</span></div><div class="time-row"><b>${fmtTime(p.bedtime)}</b><span>Bedtime</span></div></div></section>
+    <section class="card"><div class="eyebrow">TONIGHT</div><div class="summary"><span>Must do</span><b>${duration(p.must)}</b></div><div class="summary"><span>Useful</span><b>${duration(p.useful)}</b></div><div class="summary"><span>Can wait</span><b>${duration(p.wait)}</b></div><div class="summary total"><span>Available</span><b>${duration(p.available)}</b></div><div class="summary"><span>Planned</span><b>${duration(p.planned)}</b></div><div class="summary"><span>Buffer</span><b>${p.buffer>=0?duration(p.buffer):'Over '+duration(-p.buffer)}</b></div>${p.buffer<state.settings.protectedBuffer?`<div class="notice">Only Must Do tasks are protected. Useful and Can Wait tasks may roll over automatically.</div>`:''}</section>
+    <section class="card">${cats.map(([cat,label])=>taskGroup(cat,label,p)).join('')}<div class="addbox"><div class="eyebrow">QUICK ADD</div><div class="row" style="margin-top:9px"><input id="newTask" class="input flex" maxlength="70" placeholder="Task name"><input id="newMinutes" class="input" type="number" min="1" max="480" value="10" style="width:72px"><select id="newCategory" class="select"><option value="must">Must</option><option value="useful" selected>Useful</option><option value="wait">Can wait</option></select><button class="button green" data-action="add-task">Add</button></div></div></section>`;
+  }
+  function taskGroup(cat,label,p){ const tasks=state.tasks.filter(t=>t.category===cat).sort((a,b)=>Number(a.done)-Number(b.done)||taskSort(a,b)); const sum=tasks.filter(t=>!t.done).reduce((n,t)=>n+Number(t.estimateMinutes),0); return `<div class="group"><div class="grouphead"><span>${label}</span><span>${duration(sum)}</span></div>${tasks.length?tasks.map(t=>`<div class="task ${t.done?'done':''}"><button class="check" data-action="toggle-task" data-id="${t.id}">${t.done?'✓':''}</button><div><div class="taskname">${esc(t.title)}</div><div class="taskmeta">${t.dueBefore==='leave'?'Before leaving':''}${t.rollovers>=3?' • moved often':''}</div></div><div class="tasktime">${duration(t.estimateMinutes)}</div><button class="delete" title="Delete task" data-action="delete-task" data-id="${t.id}">×</button></div>`).join(''):`<div class="small">Nothing here.</div>`}</div>`; }
+  function recoveryView(p){ const a=recoveryAdvice(p); return `<div class="eyebrow">RECOVERY</div><section class="card"><div class="title">How are you feeling?</div><div class="choices" style="margin-top:14px">${['good','okay','drained'].map(x=>`<button class="choice ${state.recovery.energy===x?'selected green':''}" data-action="energy" data-value="${x}">${x[0].toUpperCase()+x.slice(1)}</button>`).join('')}</div><div class="title" style="font-size:23px;margin-top:26px">Today was:</div><div class="choices" style="margin-top:14px">${[['normal','Normal'],['active','Active shift'],['workout','Workout'],['stress','High stress']].map(([v,l])=>`<button class="choice ${state.recovery.dayType===v?'selected':''}" data-action="daytype" data-value="${v}">${l}</button>`).join('')}</div></section><section class="recoverybox"><div class="eyebrow">NEXT RECOVERY STEP</div><div class="tasktitle" style="font-size:23px">${a.title}</div><p class="small" style="color:#222">${a.why}</p><button class="button primary" data-action="recovery-done">${a.button} ✓</button></section><section class="card"><div class="eyebrow">SLEEP PLAN</div><div class="title">${p.shift?'Bedtime: '+fmtTime(p.bedtime):'Add a shift first'}</div><p class="small">Recovery changes the recommendation, not the layout. WorkWell keeps the next decision small.</p></section>`; }
+  function settingsModal(){ const s=state.settings, sh=nextShift() || state.shifts[0]; return `<div class="modalback"><section class="modal"><div class="modalhead"><div><div class="eyebrow">SETUP</div><h2>Schedule and planning</h2></div><button class="iconbtn" data-action="settings">×</button></div><div class="settings-section"><h3>Next shift</h3><div class="row"><label class="small">Starts<br><input id="shiftStart" class="input" type="datetime-local" value="${sh?sh.start:''}"></label><label class="small">Ends<br><input id="shiftEnd" class="input" type="datetime-local" value="${sh?sh.end:''}"></label></div><div class="row" style="margin-top:10px"><input id="shiftLocation" class="input flex" value="${esc(sh?.location||'')}" placeholder="Work location"><button class="button green" data-action="save-shift">Save shift</button></div><p class="small">Use real date and time values. Overnight shifts work as long as the end date-time is after the start.</p></div><div class="settings-section"><h3>Leave and sleep plan</h3><div class="row"><label class="small">Prep minutes<br><input id="prep" class="input" type="number" min="0" max="240" value="${s.prepMinutes}"></label><label class="small">Commute minutes<br><input id="commute" class="input" type="number" min="0" max="300" value="${s.commuteMinutes}"></label><label class="small">Commute buffer<br><input id="commuteBuffer" class="input" type="number" min="0" max="120" value="${s.commuteBufferMinutes}"></label><label class="small">Sleep hours<br><input id="sleep" class="input" type="number" min="4" max="12" step="0.5" value="${s.desiredSleep}"></label><label class="small">Protected buffer<br><input id="protected" class="input" type="number" min="0" max="120" value="${s.protectedBuffer}"></label></div><button class="button primary" data-action="save-settings">Save planning settings</button></div><div class="settings-section"><h3>Data</h3><div class="row"><button class="button subtle" data-action="export">Export backup</button><button class="button subtle" data-action="import">Import backup</button><button class="button danger" data-action="reset">Reset app</button><input id="importFile" type="file" accept="application/json" class="hidden"></div></div></section></div>`; }
+  function bind(){
+    document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{state.ui.tab=b.dataset.tab;save();render()});
+    document.querySelectorAll('[data-action]').forEach(el=>el.onclick=(e)=>handle(e.currentTarget));
+  }
+  function handle(el){ const a=el.dataset.action, p=plan();
+    if(a==='settings'){state.ui.showSettings=!state.ui.showSettings;save();render();return}
+    if(a==='explain'){state.ui.showExplanation=!state.ui.showExplanation;save();render();return}
+    if(a==='complete-rec'){ const r=recommendation(p); if(r.type==='task'){ completeTask(r.task.id); } else if(r.type==='setup'){state.ui.showSettings=true;render()} else {toast(r.action+' — good call.');haptic()} return; }
+    if(a==='toggle-task'){completeTask(el.dataset.id);return}
+    if(a==='delete-task'){state.tasks=state.tasks.filter(t=>t.id!==el.dataset.id);save();render();toast('Task removed');return}
+    if(a==='add-task'){const title=$('#newTask').value.trim(), mins=Number($('#newMinutes').value), category=$('#newCategory').value;if(!title||!mins){toast('Add a task name and minutes.');return}state.tasks.push({id:id(),title,estimateMinutes:Math.max(1,mins),category,dueBefore:category==='must'?'leave':'',done:false,plannedDate:new Date().toISOString().slice(0,10),rollovers:0});save();render();toast('Added to '+(category==='must'?'Must Do':category==='useful'?'Useful':'Can Wait'));return}
+    if(a==='energy'){state.recovery.energy=el.dataset.value;save();render();return}
+    if(a==='daytype'){state.recovery.dayType=el.dataset.value;save();render();return}
+    if(a==='recovery-done'){state.recovery.mealLogged=true;save();toast('Recovery step logged');haptic();return}
+    if(a==='save-shift'){const start=$('#shiftStart').value,end=$('#shiftEnd').value,location=$('#shiftLocation').value.trim()||'Work location';if(!start||!end||new Date(end)<=new Date(start)){toast('Shift end must be after shift start.');return}const current=nextShift()||state.shifts[0]; if(current){Object.assign(current,{start,end,location})}else{state.shifts.push({id:id(),start,end,location,overtimePossible:false})}save();render();toast('Next shift saved');return}
+    if(a==='save-settings'){const n=id=>Number($(id).value);const vals={prepMinutes:n('#prep'),commuteMinutes:n('#commute'),commuteBufferMinutes:n('#commuteBuffer'),desiredSleep:n('#sleep'),protectedBuffer:n('#protected')};if(Object.values(vals).some(x=>Number.isNaN(x)||x<0)){toast('Use valid planning numbers.');return}state.settings=vals;save();render();toast('Planning settings saved');return}
+    if(a==='export'){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),x=document.createElement('a');x.href=url;x.download='workwell-backup.json';x.click();URL.revokeObjectURL(url);return}
+    if(a==='import'){$('#importFile').click();$('#importFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const imported=JSON.parse(r.result);if(!imported.settings||!Array.isArray(imported.shifts)||!Array.isArray(imported.tasks))throw Error();state=imported;save();render();toast('Backup restored')}catch(err){toast('That backup file is not valid.')}};r.readAsText(f)};return}
+    if(a==='reset'){if(confirm('Reset WorkWell and erase this browser data?')){state=defaultState();save();render();toast('WorkWell reset')}return}
+  }
+  function completeTask(taskId){const t=state.tasks.find(x=>x.id===taskId);if(!t)return;const now=Date.now();if(!t.done){const actual=Math.max(1,Math.round((now-(t.startedAt||now))/60000));t.done=true;t.completedAt=new Date().toISOString();state.history.push({taskId:t.id,title:t.title,estimate:t.estimateMinutes,actual,at:t.completedAt});if(t.actualSamples?.length){t.actualSamples.push(actual)}else{t.actualSamples=[actual]}if(t.actualSamples.length>=3){const avg=t.actualSamples.slice(-6).reduce((a,b)=>a+b,0)/Math.min(6,t.actualSamples.length);t.estimateMinutes=Math.max(1,Math.round(t.estimateMinutes*.75+avg*.25));}}else{t.done=false;t.completedAt=null}save();render();toast(t.done?`${t.title} done`:`${t.title} reopened`);haptic();}
+  render();
+})();
 </script>
 </body>
 </html>
